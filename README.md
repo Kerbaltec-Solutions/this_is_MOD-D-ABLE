@@ -13,7 +13,7 @@ import: https://github.com/liascript/CodeRunner
 
 -->
 
-[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/GameOfTribes/blob/master/README.md)
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/blob/master/README.md)
 
 # This is MOD(D)ABLE
 ## Zielsetzung
