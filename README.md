@@ -13,12 +13,17 @@ import: https://github.com/liascript/CodeRunner
 
 -->
 
-[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/blob/master/README.md)
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/GameOfTribes/blob/master/README.md)
 
 # This is MOD(D)ABLE
+
+In "This is MOD(D)ABLE" steuert der Spieler seinen eingenen Stamm, hilt ihm sich gegen wilde Tiere zu verteidigen, Nahrung und Ressourcen zu sammeln und zu neuen Größen heran zu wachsen. Dabei können Spielentitäten vom Spieler flexibel hinzugefügt und edititert werden, um das Spiel auf den eigenen Spielstil anzupassen. "This is MOD(D)ABLE" wird in der Konsole gespielt, durch Representation der Karte mittels Konsolenfarben und ASCII-Zeichen und die Kontrolle erfolgt über Textbefehle wie z.B. "fighter1:target(X,Y)". Das Spiel soll lokal compiliert werden, um eine maximale editierbarkeit zu gewährleisten.
+
+-- Hier folgt bald ein Teaser-Video --
+
 ## Zielsetzung
 
-- Das Ziel ist das erstellen eines Management/Survival-Spiels ähnlich AoE unter berücksichtigung der Modifizierbarkeit durch Dritte in der Zukunft.
+- Das Ziel ist das erstellen eines Management/Survival-Spiels ähnlich AoE in C# unter berücksichtigung der Modifizierbarkeit durch Dritte in der Zukunft.
 - Die Software soll als Sourcecode verteilt werden und erst bei Ausführung lokal compiliert werden.
 - Mittels System.Reflexion soll das Programm selbstständig die Funktionen der Entitäten des Spiels aufrufen können.
 - Die Steuerung des Spiels erfolgt hauptsächlich über pseudo-funktionsaufrufe, die der Spieler in die Konsole eingibt.
