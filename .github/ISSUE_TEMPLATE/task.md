@@ -7,13 +7,13 @@ assignees: ''
 
 ---
 
-**Beschreibung**
+**Explanation**
 A clear and concise description of the task.
 
-**Schritte**
+**Steps**
   - [ ] Step 1
   - [ ] Step 2
   - [ ] Step 3
 
-**Zusätzliche informationen**
+**Additional information**
 Additional informatin, links etc. to fulfill this task
