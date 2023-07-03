@@ -64,7 +64,6 @@ public class map{
     public void display(int locMinX, int locMinY, int locSizeX, int locSizeY, int res, TIM.main game){
         Console.Clear();
         for(int y=locMinY; y<locMinY+locSizeY; y+=res){
-            Console.WriteLine("");
             for(int x=locMinX; x<locMinX+locSizeX; x+=res){
                 if(x<0||y<0||x>=sizeX||y>=sizeY){ //catch the camera showing areas outside the map
                     Console.BackgroundColor = colors.consoleColor(0);
@@ -74,8 +73,8 @@ public class map{
                     Console.Write("  ");
                 }
             }
-            Console.WriteLine("");
             Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine("");
         }
         
     }
