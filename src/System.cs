@@ -96,12 +96,26 @@ public class system{
         game.zoom=int.Parse(input);
     }
 
+    //change zoom incrementally
+    public void incZoom(int Cz, TIM.main game){
+        game.zoom+=Cz;
+        if(game.zoom<1){
+            game.zoom=1;
+        }
+    }
+
     //set center position for map drawing
     public static void setPosition(string input, TIM.main game){
         int x=int.Parse(input.Split(",")[0]);
         int y=int.Parse(input.Split(",")[1]);
         game.center_pos.X = x;
         game.center_pos.Y=y;
+    }
+
+    //change position incrementally
+    public void incPosition(int Cx, int Cy, TIM.main game){
+        game.center_pos.X+=Cx;
+        game.center_pos.Y+=Cy;
     }
 
     //list all game entities
