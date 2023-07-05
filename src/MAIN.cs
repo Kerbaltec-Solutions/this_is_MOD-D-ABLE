@@ -38,14 +38,14 @@ public class TIM{
         }
         public void Start(main g){
             game=g;
-            gameMap.createMap();    //create Map
+            gameMap.createTerrain();    //create Map
             entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
             InpH.Start();   //start the input handler
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open
                     string? input=Console.ReadLine();   //read the input
-                    if(input==" "){  //if the input is a space
-                        input_interrupt=false;  //leave the input node
+                    if(input==""){  //if no input is given
+                        input_interrupt=false;  //leave the input mode
                         Console.WriteLine("Input mode closed:");
                         InpH=new Thread(new ThreadStart(InputHandler));
                         InpH.Start();   //restart the input handler

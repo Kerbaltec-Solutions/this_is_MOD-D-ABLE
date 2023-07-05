@@ -41,16 +41,10 @@ public class map{
     }
 
     //fill the map
-    public void createMap(){
-        // this is all placeholder and will be replaced
-        int i=0;
-        foreach(mapPixel pixel in mapArray){
-            pixel.color=i;
-            i++;
-            if(i>15){
-                i=0;
-            }
-        }
+    public void createTerrain(){
+        MapGenerator generator = new MapGenerator();
+        generator.generateTerrain(this.mapArray);
+        
     }
 
     //print all values of all pixels to the console
@@ -83,10 +77,16 @@ public class map{
 //mapPixel class
 public class mapPixel{
     public int color{get; set;} //color of the Pixel
+    public Resource resource{get; set;} //resource of Pixel
 
     //initialize the Pixel
+    public mapPixel(Resource res){
+        color= res.getColor();
+        resource=res;
+    }
     public mapPixel(){
-        color=0;
+        resource=new Resource();
+        color= resource.getColor();
     }
 
     //print the values of the Pixel to the console

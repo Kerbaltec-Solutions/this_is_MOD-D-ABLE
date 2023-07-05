@@ -12,7 +12,7 @@ public class system{
     //create a completely new map
     public static void newMap(TIM.main game){
         game.entities = new Dictionary<string,functionProperties>();
-        game.gameMap.createMap();
+        game.gameMap.createTerrain();
         game.entities.Add("sys",new functionProperties());
     }
 
