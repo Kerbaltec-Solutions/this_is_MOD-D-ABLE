@@ -38,7 +38,7 @@ public class system{
         var boolVar= entity.fType.GetProperty("createByPlayer");
         if(boolVar!=null){  //if the entity could be created by the player directly
             var boolVal= boolVar.GetValue(entity.fObject, null);
-            bool creatable = (bool)boolVal;
+            bool? creatable = (bool?)boolVal;
             if(creatable==true){    //if the entity can be created by the player directly
                 try{
                     functionProperties props = new functionProperties(inp[0]);  //instanciate the entity

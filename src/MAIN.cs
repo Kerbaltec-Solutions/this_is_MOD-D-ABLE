@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "0.0.2-dev"; //public variable for the versioning info
+    public static string version {get;} = "0.0.4-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Thread.Sleep(2000);
