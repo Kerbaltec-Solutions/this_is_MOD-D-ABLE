@@ -3,8 +3,8 @@ using System.Reflection;
 
 //class to store informations needed for calling functions of game entities
 public class functionProperties{
-    public object fObject {get; private set;}
-    public Type fType {get; private set;}
+    public object fObject {get; private set;} = null!;
+    public Type fType {get; private set;} = null!;
     public functionProperties(){
         setProperties("system");    //if the class isn't given, default to system class
     }
