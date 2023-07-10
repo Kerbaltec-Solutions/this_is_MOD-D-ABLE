@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "0.0.4-dev"; //public variable for the versioning info
+    public static string version {get;} = "0.0.6-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Thread.Sleep(2000);
@@ -44,8 +44,8 @@ public class TIM{
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open
                     string? input=Console.ReadLine();   //read the input
-                    if(input==""){  //if no input is given
-                        input_interrupt=false;  //leave the input mode
+                    if(input==" "){  //if the input is a space
+                        input_interrupt=false;  //leave the input node
                         Console.WriteLine("Input mode closed:");
                         InpH=new Thread(new ThreadStart(InputHandler));
                         InpH.Start();   //restart the input handler
@@ -83,6 +83,7 @@ public class TIM{
                 cki = Console.ReadKey(true).Key;
                 Thread.Sleep(0);
                 switch(cki){    //special quickkeys for panning and zooming the map
+                    //game cannot realisically ne null in the following block becouse of the program structure
                     case ConsoleKey.Add:
                         sys.incZoom(-1,game);
                         break;

@@ -17,13 +17,36 @@ public class functionProperties{
             Console.WriteLine("ERR: Classname '{0}' not found!",Class);
             throw new NotImplementedException();
         }
-        fType=TypeN;
+        fType=TypeN;    //get the Type of the new Entity
         ConstructorInfo? functionConstructor = fType.GetConstructor(Type.EmptyTypes);
         if(functionConstructor==null){
             Console.WriteLine("ERR: No constructor for Class '{0}' found", Class);
             throw new NotImplementedException();
         }
-        fObject=functionConstructor.Invoke(new object[]{});
+        fObject=functionConstructor.Invoke(new object[]{}); //invoke a new Object
+    }
+}
+
+//class to store important properties of a entity directly to not have to use reflection every time
+public class entityProperties{
+    public char m_char {get; set;}  //map character
+    public int m_color {get; set;}  //map color
+    public functionProperties? entity {get; private set;}   //the information for calling it
+    public Position position {get; set;}    //map position
+    public string name {get; set;}  //the namestring
+    public entityProperties(char chr, int col, functionProperties e, Position p, string n){
+        m_char=chr;
+        m_color=col;
+        entity=e;
+        position=p;
+        name=n;
+    }
+    public entityProperties(){
+        m_char=' ';
+        m_color=3;
+        entity=null;
+        position=new Position();
+        name="";
     }
 }
 
