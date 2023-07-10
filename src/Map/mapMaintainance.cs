@@ -129,32 +129,34 @@ public class map{
         }
         Console.WriteLine("");
     }
+
+    // Function to det data of all entities on the map
     public void updateMap(TIM.main game){
         for(int x=0; x<sizeX; x++){
             for(int y=0; y<sizeY; y++){
-                mapEntities[x,y]=new List<entityProperties>();
+                mapEntities[x,y]=new List<entityProperties>();  //clear the entity list
             }
         }
         foreach(KeyValuePair<string, functionProperties> entry in game.entities){
             functionProperties entity = entry.Value;
-            var boolVar= entity.fType.GetProperty("draw");
-            if(boolVar!=null){
+            var boolVar= entity.fType.GetProperty("draw");  
+            if(boolVar!=null){  //if the entity could be drawable
                 var boolVal= boolVar.GetValue(entity.fObject, null);
                 bool hasPos = (bool)boolVal;
-                if(hasPos==true){
-                    var posVar= entity.fType.GetProperty("position");
+                if(hasPos==true){   //if the entity is drawable
+                    var posVar= entity.fType.GetProperty("position");   //get the position on the map
                     var posVal= posVar.GetValue(entity.fObject, null);
                     Position position = (Position)posVal;
 
-                    var charVar= entity.fType.GetProperty("mapChar");
+                    var charVar= entity.fType.GetProperty("mapChar");   //get the map character
                     var charVal= charVar.GetValue(entity.fObject, null);
                     char mapChar = (char)charVal;
 
-                    var colorVar= entity.fType.GetProperty("mapColor");
+                    var colorVar= entity.fType.GetProperty("mapColor"); //get the map color
                     var colorVal= colorVar.GetValue(entity.fObject, null);
                     int mapColor = (int)colorVal;
                     
-                    mapEntities[position.X,position.Y].Add(new entityProperties(mapChar,mapColor,entity,position,entry.Key));
+                    mapEntities[position.X,position.Y].Add(new entityProperties(mapChar,mapColor,entity,position,entry.Key));   //add the information to the list
                 }
             }
         }
