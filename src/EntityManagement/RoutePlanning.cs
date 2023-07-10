@@ -48,7 +48,7 @@ public class Node{
     }
 
     // returns all neighbour nodes
-    public List<Node> GetAdjacentWalkableNodes(Dictionary<PositionKey,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = false)
+    public List<Node> GetAdjacentWalkableNodes(Dictionary<Position,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = false)
     {
         List<Node> walkableNodes = new List<Node>();
         Position[] nextPositions= GetAdjacentPositions();
@@ -58,7 +58,7 @@ public class Node{
             int x = position.X;
             int y = position.Y;
 
-            PositionKey posKey = new PositionKey(position.X,position.Y);
+            //PositionKey position = new PositionKey(position.X,position.Y);
 
             // stay in map
             if (x < 0 || x >= sx || y < 0 || y >= sy)
@@ -66,52 +66,41 @@ public class Node{
 
             try{
                 // ignore notWalkable nodes if ignoreNotWalkeble 
-                if (ignoreNotWalkable &&!nodes[posKey].IsWalkable)
+                if (ignoreNotWalkable &&!nodes[position].IsWalkable)
                     continue;
 
                 // Ignore nodes that are already closed
-                if (nodes[posKey].State == NodeState.Closed){
+                if (nodes[position].State == NodeState.Closed){
                     continue;
                 }
                 // if node is open: only add node if its G value would decrease by having <this> as new parent
-                if (nodes[posKey].State == NodeState.Open)
+                if (nodes[position].State == NodeState.Open)
                 {
                     float gTemp = this.G + this.Cost;
-                    if (gTemp < nodes[posKey].G)
+                    if (gTemp < nodes[position].G)
                     {
-                        nodes[posKey].ParentNode = this;
-                        nodes[posKey].G = gTemp;
-                        walkableNodes.Add(nodes[posKey]);
+                        nodes[position].ParentNode = this;
+                        nodes[position].G = gTemp;
+                        walkableNodes.Add(nodes[position]);
                     }
                     continue;
                 }
             } 
             catch(KeyNotFoundException){ // if node is not yet created
                 // create new node with <this> as parent -> add to nodes directionary
-                nodes.Add(posKey,new Node(position,this,maparr[position.X,position.Y].resource.IsWalkable,maparr[position.X,position.Y].resource.SpeedDevider)); 
+                nodes.Add(position,new Node(position,this,maparr[position.X,position.Y].resource.IsWalkable,maparr[position.X,position.Y].resource.SpeedDevider)); 
                 // Ignore notWalkable nodes if ignoreNotWakable 
-                if (ignoreNotWalkable &&!nodes[posKey].IsWalkable)
+                if (ignoreNotWalkable &&!nodes[position].IsWalkable)
                     continue;  
-                nodes[posKey].State = NodeState.Open;    
-                nodes[posKey].G = nodes[posKey].ParentNode!.G + nodes[posKey].ParentNode!.Cost;
-                nodes[posKey].H = nodes[posKey].getDistance(target.Pos);
-                walkableNodes.Add(nodes[posKey]); 
+                nodes[position].State = NodeState.Open;    
+                nodes[position].G = nodes[position].ParentNode!.G + nodes[position].ParentNode!.Cost;
+                nodes[position].H = nodes[position].getDistance(target.Pos);
+                walkableNodes.Add(nodes[position]); 
                 continue;
             }
         }    
         return walkableNodes;
     }
-}
-
-public struct PositionKey{
-    int X{get; set;}
-    int Y{get;set;}
-
-    public PositionKey(int x, int y){
-        X = x;
-        Y = y;
-    }
-
 }
 
 // three different states for nodes
@@ -132,7 +121,7 @@ public class Route{
     private Node Search(Node startNode, int sx, int sy)
         {
             // save discovered nodes in directionary -> key is their position
-            Dictionary<PositionKey,Node> discoveredNodes = new Dictionary<PositionKey,Node>();
+            Dictionary<Position,Node> discoveredNodes = new Dictionary<Position,Node>();
 
             // initializes nextNodes with adjacent walkable nodes from startNode
             List<Node> nextNodes = startNode.GetAdjacentWalkableNodes(discoveredNodes, sx, sy, this.targetNode, maparr, this.ignoreNotWalkable);
@@ -150,7 +139,7 @@ public class Route{
                     ignoreNotWalkable = false;
                     return Search(startNode,sx,sy);
                 }
-                discoveredNodes[new PositionKey(nextNode.Pos.X, nextNode.Pos.Y)].State = NodeState.Closed;
+                discoveredNodes[nextNode.Pos].State = NodeState.Closed;
                 
                 if (nextNode.Pos == this.targetNode.Pos)
                 {

@@ -4,8 +4,8 @@ using RoutePlanning;
 
 public class TestEntity{
     private TIM.main game = null!; // reference to game
-    public  bool draw{get;} = true; //if the entity should be drawn on the map
-    public  bool iterate{get;} = true;  //if the entity has actions to perform every frame
+    public bool draw{get;} = true; //if the entity should be drawn on the map
+    public bool iterate{get;} = true;  //if the entity has actions to perform every frame
     public bool createByPlayer{get;} = true;    //if the entity can be created by the player directly
     public char mapChar{get;} = '#';    //character which will represent the entity on the map
     public int mapColor{get;} = 0;  //color in which the entity will be drawn on the map
@@ -27,16 +27,17 @@ public class TestEntity{
     //setup function, set position ect.
     public void setup(string input, TIM.main game){
         this.position=new Position(Math.Min(int.Parse(input.Split(",")[0]),game.mapsize.X),Math.Min(int.Parse(input.Split(",")[1]),game.mapsize.Y));
+        this.game = game; 
     }
 
     public void move(){
         if(this.route != null && this.route.Path != null){ // if path available
-            if(this.timeSinceLastMove* getModifiedSpeed() >= 1){ // if entity can move again
-                float steps = timeSinceLastMove*getModifiedSpeed(); // number of fields the entity can move
+            float steps = timeSinceLastMove*getModifiedSpeed(); // number of fields the entity can move
+            if(steps >= 1){ // if entity can move again                
                 // speed is based on resource of field at beginning of movement 
                 this.timeSinceLastMove = 0; // reset time
                 for(int i = 0; i< steps;i++){ // move along path
-                    if(this.route.Path != null){
+                    if(this.route != null){
                         try{
                             this.position = this.route.Path[0]; 
                             this.route.Path.RemoveAt(0); // deletes current position from route
