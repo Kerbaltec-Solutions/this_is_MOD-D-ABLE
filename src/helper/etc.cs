@@ -15,6 +15,7 @@ public class ui{
         outp+=" ##:::: ##:. #######:: ######:::::. ###:::. ######: ###::: ##:::: ##: ########:: ########: ########:\n";
         outp+="..:::::..:::.......:::........:::::...::........:::...::::..:::::..::........:::........::........::\n";
         outp+="\n\nVersion: "+TIM.version+"\n";
+        outp+="\n press any key to start";
         Console.WriteLine(outp);
     }
     public static void printOutro(){
@@ -24,6 +25,7 @@ public class ui{
         outp+="Copyright (c) 2023 Kerbaltec-Solutions\n";
         outp+="All gamefiles are shared under MIT License\n\n";
         outp+="Version: "+ TIM.version+"\n";
+        outp+="\n press any key to exit";
         Console.WriteLine(outp);
     }
 }

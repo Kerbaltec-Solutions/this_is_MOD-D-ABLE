@@ -6,22 +6,22 @@ public class TIM{
     public static string version {get;} = "0.0.6-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
-        Thread.Sleep(2000);
+        Console.ReadKey();
         main game = new main(); //initialize the game
         game.Start(game);       //start the game
     }
     public class main{
         //parameter declaraion
-        public map gameMap{get; set;}   
-        public Boolean exit{get; set;}
-        public IDictionary<string,functionProperties> entities {get; set;}
-        public system sys{get;}
-        public int zoom {get; set;}
-        public Position center_pos {get; set;}
-        public Position mapsize {get;} = new Position(100,100);
-        public main? game{get; private set;}
-        public bool input_interrupt{get; set;}
-        public Thread InpH{get; set;}
+        public map gameMap{get; set;}   //game Map
+        public Boolean exit{get; set;}  //boolean when true, the game exits
+        public IDictionary<string,functionProperties> entities {get; set;}  //dictionary of all existing entities
+        public system sys{get;} //new main system class
+        public int zoom {get; set;} //zoom level
+        public Position center_pos {get; set;}  //center position of the camera
+        public Position mapsize {get;} = new Position(100,100); //size of the game map
+        public main? game{get; private set;}    //the game itself
+        public bool input_interrupt{get; set;}  //boolean, if true, the imput mode is opened
+        public Thread InpH{get; set;}   //Input handler
 
         public const float STEPTIME = (float)1; //time intervals between steps in seconds
         
@@ -44,7 +44,7 @@ public class TIM{
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open
                     string? input=Console.ReadLine();   //read the input
-                    if(input==" "){  //if the input is a space
+                    if(input==""){  //if the input is empty
                         input_interrupt=false;  //leave the input node
                         Console.WriteLine("Input mode closed:");
                         InpH=new Thread(new ThreadStart(InputHandler));
@@ -58,14 +58,18 @@ public class TIM{
                         var itVar= entity.fType.GetProperty("iterate");
                         if(itVar!=null){    //if entity could have been made to be executed every frame
                             var itVal= itVar.GetValue(entity.fObject, null);
-                            bool iterate = (bool)itVal;
+                            bool? iterate = (bool?)itVal;
                             if(iterate==true){  //if entity was made to be executed every frame
                                 try{
-                                    entity.fType.GetMethod("step").Invoke(entity.fObject, new object[]{game}); //try to execute the step method
+                                    MethodInfo? stepMethod = entity.fType.GetMethod("step");
+                                    if(stepMethod == null){
+                                        throw new NotImplementedException("FATAL: a entity was set to iterable but contains no step function!");
+                                    }
+                                    stepMethod.Invoke(entity.fObject, new object[]{game}); //try to execute the step method
                                 }catch(TargetInvocationException ex){                        
                                     // ex now stores the original exception
                                     if(ex.InnerException is NotSupportedException){
-                                        Console.WriteLine("Stepfunction of {0} not found!",entry.Key);
+                                        throw new NotImplementedException("FATAL: a entity was set to iterable but contains no step function!");
                                     }
                                 }
                             }
@@ -82,8 +86,10 @@ public class TIM{
             do{
                 cki = Console.ReadKey(true).Key;
                 Thread.Sleep(0);
+                if(game==null){
+                    throw new Exception("FATAL: Something tried to call the Input handler before a game was initialized properly.");
+                }
                 switch(cki){    //special quickkeys for panning and zooming the map
-                    //game cannot realisically ne null in the following block becouse of the program structure
                     case ConsoleKey.Add:
                         sys.incZoom(-1,game);
                         break;
@@ -105,7 +111,7 @@ public class TIM{
                     default:
                         break;
                 }
-            }while(cki!=ConsoleKey.Spacebar);   //if the spacebar is pressed
+            }while(cki!=ConsoleKey.Enter);   //if the Enter key is pressed
             input_interrupt=true;   //open the input mode
             Console.WriteLine("Input mode open:");
             return; //quit the input handler, input from now on is handeled differently

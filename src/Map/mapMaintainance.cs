@@ -142,18 +142,36 @@ public class map{
             var boolVar= entity.fType.GetProperty("draw");  
             if(boolVar!=null){  //if the entity could be drawable
                 var boolVal= boolVar.GetValue(entity.fObject, null);
-                bool hasPos = (bool)boolVal;
+                bool? hasPos = (bool?)boolVal;
                 if(hasPos==true){   //if the entity is drawable
                     var posVar= entity.fType.GetProperty("position");   //get the position on the map
+                    if(posVar==null){
+                        throw new NotImplementedException("FATAL: a entity does not contain a position neccesary for drawing on the map!");
+                    }
                     var posVal= posVar.GetValue(entity.fObject, null);
+                    if(posVal==null){
+                        throw new NotImplementedException("FATAL: a entity does not contain a position neccesary for drawing on the map!");
+                    }
                     Position position = (Position)posVal;
 
                     var charVar= entity.fType.GetProperty("mapChar");   //get the map character
+                    if(charVar==null){
+                        throw new NotImplementedException("FATAL: a entity does not contain a character neccesary for drawing on the map!");
+                    }
                     var charVal= charVar.GetValue(entity.fObject, null);
+                    if(charVal==null){
+                        throw new NotImplementedException("FATAL: a entity does not contain a character neccesary for drawing on the map!");
+                    }
                     char mapChar = (char)charVal;
 
                     var colorVar= entity.fType.GetProperty("mapColor"); //get the map color
+                    if(colorVar==null){
+                        throw new NotImplementedException("FATAL: a entity does not contain a color neccesary for drawing on the map!");
+                    }
                     var colorVal= colorVar.GetValue(entity.fObject, null);
+                    if(colorVal==null){
+                        throw new NotImplementedException("FATAL: a entity does not contain a color neccesary for drawing on the map!");
+                    }
                     int mapColor = (int)colorVal;
                     
                     mapEntities[position.X,position.Y].Add(new entityProperties(mapChar,mapColor,entity,position,entry.Key));   //add the information to the list
