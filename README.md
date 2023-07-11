@@ -2,7 +2,7 @@
 
 author:   Björn Schnabel
 email:    bjoern.schnabel09@gmail.com
-version:  0.0.1
+version:  0.0.2
 language: de
 narrator: Deutsch Female
 title: GoT README
@@ -17,9 +17,24 @@ import: https://github.com/liascript/CodeRunner
 
 # This is MOD(D)ABLE
 
-In "This is MOD(D)ABLE" steuert der Spieler seinen eingenen Stamm, hilt ihm sich gegen wilde Tiere zu verteidigen, Nahrung und Ressourcen zu sammeln und zu neuen Größen heran zu wachsen. Dabei können Spielentitäten vom Spieler flexibel hinzugefügt und edititert werden, um das Spiel auf den eigenen Spielstil anzupassen. "This is MOD(D)ABLE" wird in der Konsole gespielt, durch Representation der Karte mittels Konsolenfarben und ASCII-Zeichen und die Kontrolle erfolgt über Textbefehle wie z.B. "fighter1:target(X,Y)". Das Spiel soll lokal compiliert werden, um eine maximale editierbarkeit zu gewährleisten.
+In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend itself against wild animals, collect food and resources and grow to new sizes. Game entities can be flexibly added and edited by the player to adapt the game to their own playstyle. "This is MOD(D)ABLE" is played in the console by representing the map using console colors and ASCII characters, and control is done via text commands such as "fighter1:target(X,Y)". The game should be compiled locally to ensure maximum editability.
 
 -- Hier folgt bald ein Teaser-Video --
+
+## Downloads:
+
+- For the last stable release, please check out the "stable" branch or the last "stable" release.
+- For the last release, check out the "nightly" branch or the laskst "nightly" release. The nightly versions are more up-to-date but maybe not running properly.
+
+## Useage: 
+
+- Download the version, you would like to use.
+- open the console
+- Navigate inside the folder "this_is_MOD-D-ABLE"
+- ensure, you have .NET 6.0 installed
+- start the program by typing "dotnet run"
+- press ENTER to switch in and out of the command input mode.
+- in the input mode, type sys:help() to view a list of available commands. (not yet implemented)
 
 ## Zielsetzung
 
