@@ -12,10 +12,12 @@ The "nightly" branch is for quick deployment of new features.
 When one thinks, that a nightly release should be done and the other core devs agree, all features, functions and mechanics introduced since the last deployment have to be thested manually.
 If no error occurs, set the version string to "x.(x+1).0-nightly" and include in your commit message **ver: x.x.0-nightly:** \<new features\>
 After the nightly branch is updated, the dev branch is updated.
+A new "nigtly" release is made from the nigtly branch
 All versions in the nightly branch should have the "-nightly" postfiv to their version string.
 
-The release branch is for deployment of mayor updates.
-When all core devs agree, that a major deployment shouuld be made, **all** features, functions and methots have to be tested manually.
+The stable branch is for deployment of mayor updates.
+When all core devs agree, that a major deployment should be made, **all** features, functions and methots have to be tested manually.
 If no error occurs, set the version string to "(x+1).0.0" and include in your commit message **\<release date\>: ver: x.0.0** \<new features\> \{eventually no longer supported features\}
-After the release branch ist updated, the nightly and the dev branch are updated.
+After the stable branch ist updated, the nightly and the dev branch are updated.
+A new "stable" release is made, from the stable branch.
 All versions in the releasse branch do not have a postfix to their verrsion string.
