@@ -203,7 +203,7 @@ public class Route{
     }      
 
     // constructor of Route -> also creates path 
-    public Route(mapPixel[,] map, Position start, Position target,bool fastFind = false, bool entityCanDestroyStone = false){
+    public Route(mapPixel[,] map, Position start, Position target, bool entityCanDestroyStone = false){
         this.maparr = map;
         int sx =maparr.GetUpperBound(1)+1;
         int sy = maparr.GetUpperBound(0)+1;
