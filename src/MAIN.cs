@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "0.1.2-dev"; //public variable for the versioning info
+    public static string version {get;} = "0.1.3-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -70,8 +70,12 @@ public class TIM{
                                     stepMethod.Invoke(entity.fObject, new object[]{game}); //try to execute the step method
                                 }catch(TargetInvocationException ex){                        
                                     // ex now stores the original exception
-                                    if(ex.InnerException is NotSupportedException){
+                                    if(ex.InnerException is NotImplementedException){
                                         throw new NotImplementedException("FATAL: a entity was set to iterable but contains no step function!");
+                                    }
+                                    if(ex.InnerException is NotSupportedException){
+                                        // the entity doesnt exist anymore and can therefore be removed
+                                        entities.Remove(entry.Key);
                                     }
                                 }
                             }

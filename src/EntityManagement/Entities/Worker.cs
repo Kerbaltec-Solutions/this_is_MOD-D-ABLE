@@ -6,6 +6,9 @@ public class Worker :Creature{
     public override int mapColor{get;} = 0;
     public override float speed{get;} = 7; // in fields per second
 
+    public override  int maxHealthPoints {get;} = 10;
+    public override int healthPoints{get;set;} = 10;
+
     public bool entityCanDestroyStone = true; // worker is able to create mines
 
     public int mineSpeed{get;} = 1; // in hits per second

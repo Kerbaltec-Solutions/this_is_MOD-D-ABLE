@@ -11,6 +11,11 @@ public abstract class Creature{
     public abstract int mapColor{get;}  //color in which the entity will be drawn on the map
     public abstract float speed{get;} //movement speed of the entity in fields per second
 
+    public bool isDead{get;set;} = false; 
+
+    public abstract  int maxHealthPoints {get;}
+    public abstract int healthPoints{get;set;}
+
 
     public Position position{get;set;} = null!;  //current position of the entity
     public Position? target = null;    //target position 
@@ -35,6 +40,10 @@ public abstract class Creature{
 
     //frame actions
     public virtual void step(TIM.main game){
+        if(isDead){
+            // exception is handeled in MAIN (where entity is removed)
+            throw new NotSupportedException("Entity is dead");
+        }
         move(); 
     }
 
@@ -62,7 +71,7 @@ public abstract class Creature{
             }
             this.timeSinceLastMove += TIM.main.STEPTIME;
         }
-        else{this.route = null;
+        else{
             if( target is not null &&this.position != target){
                 setRoute(this.game.gameMap.mapArray); // if no route available but target is set: create new route
             }
@@ -92,6 +101,14 @@ public abstract class Creature{
         return speed/this.game.gameMap.mapArray[position.X,position.Y].resource.SpeedDevider;
     }
 
+    // takes damage
+    public void getHit(int damage){
+        healthPoints -= damage;
+        if(healthPoints <= 0){
+            isDead = true;
+        }
+    }
+
     // functions for player
 
      // prints coordinates of position
@@ -106,6 +123,11 @@ public abstract class Creature{
             return;
         }
         else Console.WriteLine("no current route");        
+    }
+
+    // print health points and maximal health points
+    public void printHP(TIM.main game){
+        Console.WriteLine("HP: {0} | maxHp: {1}",healthPoints, maxHealthPoints);
     }
 
     //set a target
