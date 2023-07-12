@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "0.1.1-dev"; //public variable for the versioning info
+    public static string version {get;} = "0.1.2-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -40,6 +40,8 @@ public class TIM{
             game=g;
             gameMap.createTerrain();    //create Map
             entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
+            entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
+            methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
             InpH.Start();   //start the input handler
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open
@@ -89,7 +91,8 @@ public class TIM{
                 if(game==null){
                     throw new Exception("FATAL: Something tried to call the Input handler before a game was initialized properly.");
                 }
-                switch(cki){    //special quickkeys for panning and zooming the map
+                switch(cki){    
+                    //special quickkeys for panning and zooming the map
                     case ConsoleKey.Add:
                         sys.incZoom(-1,game);
                         break;
@@ -107,6 +110,19 @@ public class TIM{
                         break;
                     case ConsoleKey.RightArrow:
                         sys.incPosition(zoom,0,game);
+                        break;
+                    //special quickkeys for moving the cursor
+                    case ConsoleKey.A:
+                        methods.callMethod("c","iP","-1,0",game);
+                        break;
+                    case ConsoleKey.D:
+                        methods.callMethod("c","iP","1,0",game);
+                        break;
+                    case ConsoleKey.W:
+                        methods.callMethod("c","iP","0,-1",game);
+                        break;
+                    case ConsoleKey.S:
+                        methods.callMethod("c","iP","0,1",game);
                         break;
                     default:
                         break;

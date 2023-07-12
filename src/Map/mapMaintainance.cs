@@ -179,6 +179,47 @@ public class map{
             }
         }
     }
+    public entityProperties[] listRadius(int x, int y, int r){
+        List<entityProperties> eList=new List<entityProperties>();
+        for(int i=0; i<=r; i++){
+            if(i==0){
+                try{
+                    foreach(entityProperties e in mapEntities[x,y]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dx=-i;dx<i;dx++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+dx,y+i]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dx=-i+1;dx<=i;dx++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+dx,y-i]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dy=-i;dy<i;dy++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+i,y+dy]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dy=-i+1;dy<=i;dy++){
+                try{
+                    foreach(entityProperties e in mapEntities[x-i,y+dy]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+        }
+        return eList.ToArray();
+    }
 }
 
 //mapPixel class
