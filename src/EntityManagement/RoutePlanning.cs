@@ -143,8 +143,7 @@ public class Route{
                 
                 if (nextNode.Pos == this.targetNode.Pos)
                 {
-                    targetNode.ParentNode = nextNode.ParentNode;
-                    return targetNode;
+                    return nextNode;
                 }
                 else
                 {
