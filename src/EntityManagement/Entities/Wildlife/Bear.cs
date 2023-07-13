@@ -1,16 +1,50 @@
-public abstract class Fighter :Creature{
-    public abstract int damage{get;} // damage the fighter deals per hit
-    public abstract int hitRange{get;} // maximal distance to target in which fighter can deal damage
+public class Bear: Wildlife{
+    public override char mapChar{get;} = 'E';
+    public override int mapColor{get;} = 4;
 
-    public abstract float hitSpeed{get;} // in hit per second
+    public override  int maxHealthPoints {get;} = 5;
+    public override int healthPoints{get;set;} = 5;
+    public override float speed{get;} = 7; // in fields per second
+
+    public override Position Spawnpoint{get;set;} = new Position(0,0);
+    public override int territoryRange{get;} = 10;
+
+    public int maxDistanceToSpawn {get{return 3* territoryRange;}} // maximal distance the entity can have to spawn
+
+    public  int damage{get;} = 1; // damage the fighter deals per hit
+    public  int hitRange{get;} = 1; // maximal distance to target in which fighter can deal damage
+
+    public  float hitSpeed{get;} = (float)0.5; // in hit per second
     private float timeSinceLastHit = 0; // in seconds
 
     public override void step(TIM.main game)
     {
-        base.step(game);
-        if(tgtEntity is not null){
-            checkAttack();
+        if(!trackEntity){
+            checkTerritory(game);
         }
+
+        base.step(game);
+        checkAttack();
+    }
+
+    public override void updateMovement(mapPixel[,] maparr)
+    {
+        if(getDistanceToSpawn()> 3*territoryRange){ // if position is too far away from spawn, return to territory
+            trackEntity = false;
+            tgtEntity = null;
+            initIdleMovement(game);
+            return;
+        }
+        base.updateMovement(maparr);
+    }
+
+    // check territory for player-controlled entities to attack
+    public void checkTerritory(TIM.main game){
+        entityProperties? tgtCandidate = game.gameMap.findNearestP(this.position.X,this.position.Y,territoryRange + 1,"controlledByPlayer");
+        if(tgtCandidate!=null){
+            tgtEntity = tgtCandidate.entity;
+            trackEntity = true;}
+        return;
     }
 
     // check whether the target can be hit
@@ -60,19 +94,9 @@ public abstract class Fighter :Creature{
         return 0;
     }
 
-    // sets nearest wildlife as targetEntity (in a range of 100)
-    public void targetNearestWildlife(TIM.main game){
-        entityProperties? tgtCandidate = game.gameMap.findNearestP(this.position.X,this.position.Y,100,"isWildlife");
-        if(tgtCandidate!=null){
-            tgtEntity = tgtCandidate.entity;
-            trackEntity = true;
-            Console.WriteLine("Targeting {0} at {1}|{2}",tgtCandidate.name,tgtCandidate.position.X,tgtCandidate.position.Y);
-        }else{
-            Console.WriteLine("No Wildlife in range.");
-        }
-    }
-    
-    public void hunt(TIM.main game){
-        targetNearestWildlife(game);
+    private double getDistanceToSpawn(){
+        return Math.Sqrt(Math.Pow(position.X-Spawnpoint.X,2)+Math.Pow(position.Y-Spawnpoint.Y,2));
     }
 }
+
+    
