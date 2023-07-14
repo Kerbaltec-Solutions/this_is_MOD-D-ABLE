@@ -3,12 +3,15 @@ public abstract class Wildlife: Creature{
     public bool isWildlife{get;} = true;
     public override bool createByPlayer{get;} = false;
     public override bool controlledByPlayer{get;} = false;
-    public abstract Position Spawnpoint{get;set;}
+    public  Position Spawnpoint{get;set;} = null!; 
     public abstract int territoryRange{get;} // radius of territory (around spawnpoint)
 
-    public override void setup(string input, TIM.main game){
+    public abstract int food {get;}
+
+    public override void autoSetup(Position position, TIM.main game){
         this.game = game;
-        position = Spawnpoint;
+        this.position = position;
+        this.Spawnpoint = position;
     }
     public override void step(TIM.main game)
     {

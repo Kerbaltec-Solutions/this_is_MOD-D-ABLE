@@ -1,5 +1,5 @@
 public class SwordFighter : Fighter{
-    public override  bool createByPlayer{get;} = true;
+    public override  bool createByPlayer{get;} = false;
     public override bool controlledByPlayer{get;} = true;
     public override char mapChar{get;} = 'S';
     public override int mapColor{get;} = 0;

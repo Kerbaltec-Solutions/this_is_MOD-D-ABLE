@@ -5,8 +5,8 @@ public class Deer: Wildlife{
     public override  int maxHealthPoints {get;} = 10;
     public override int healthPoints{get;set;} = 10;
     public override float speed{get;} = 7; // in fields per second
-
-    public override Position Spawnpoint{get;set;} = new Position(0,0);
     public override int territoryRange{get;} = 10;
+
+    public override int food{get;} = 2;
 
 }

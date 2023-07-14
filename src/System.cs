@@ -64,7 +64,8 @@ public class system{
                             this.displayMap(game);
                         }catch(TargetInvocationException ex){
                             if(ex.InnerException is NotSupportedException){
-                                Console.WriteLine("INF: No setup function for {0} found",inp[0]);
+                                game.entities.Remove(inp[1]);
+                                Console.WriteLine(ex.InnerException.Message);
                             }
                         } 
                     }
@@ -123,6 +124,17 @@ public class system{
         foreach(KeyValuePair<string, functionProperties> entry in game.entities){
             Console.WriteLine("{0}: {1} , {2}",entry.Key,entry.Value.fType);
         }
+    }
+
+    public void printFood(TIM.main game){
+        Console.WriteLine("Food: {0}", PlayerMaterials.Food);
+    }
+    public void printMoney(TIM.main game){
+        Console.WriteLine("Money: {0}", PlayerMaterials.Money);
+    }
+    public void printMaterials(TIM.main game){
+        printFood(game);
+        printMoney(game);
     }
 
     //universal step function which is executed every frame
