@@ -29,6 +29,11 @@ public class House{
                     return 1;
                 }else{return 0;}
             }
+            case "BowFighter":{
+                if(PlayerMaterials.Food >= 2 && PlayerMaterials.Money >= 4){
+                    return 1;
+                }else{return 0;}
+            }
             default: return -1;
         }
     }
@@ -42,6 +47,11 @@ public class House{
             case "SwordFighter":{
                 PlayerMaterials.Food -= 2;
                 PlayerMaterials.Money -= 2;
+                break;
+            }
+            case "BowFighter":{
+                PlayerMaterials.Food -= 2;
+                PlayerMaterials.Money -= 4;
                 break;
             }
             default: return;
