@@ -78,9 +78,9 @@ public class House{
             }
             default:{
                 try{
-                    game.entities.Add(name,entity);
                     if(entity.fType.GetMethod("autoSetup") is not null){
                         entity.fType.GetMethod("autoSetup")!.Invoke(entity.fObject, new object[]{this.position,game});
+                        game.entities.Add(name,entity);
                         subtractMaterials(entityClass);
                     }
                 }catch (ArgumentException){

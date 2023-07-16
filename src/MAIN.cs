@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "0.1.4-dev"; //public variable for the versioning info
+    public static string version {get;} = "0.1.6-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -39,6 +39,10 @@ public class TIM{
         public void Start(main g){
             game=g;
             gameMap.createTerrain();    //create Map
+            SpawnEntities spawner = new SpawnEntities();
+            spawner.spawnentities("Deer",game);
+            spawner.spawnentities("Bear",game);
+            spawner.spawnOre(game);
             entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
             entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
             methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera

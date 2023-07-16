@@ -53,7 +53,7 @@ public abstract class Fighter :Creature{
             var val = tgtEntity.fType.GetProperty("position");
             if(val is not null){
                 Position tgtposition= (Position) val.GetValue(tgtEntity.fObject, null)!;
-                // calculate distance via 2 positions via Pythagoras
+                // calculate distance via Pythagoras
                 return Math.Sqrt(Math.Pow(position.X-tgtposition.X,2)+Math.Pow(position.Y-tgtposition.Y,2));
             }          
         }

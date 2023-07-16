@@ -8,15 +8,18 @@ public abstract class Wildlife: Creature{
 
     public abstract int food {get;}
 
-    public override void autoSetup(Position position, TIM.main game){
+    public override void autoSetup(Position pos, TIM.main game){
         this.game = game;
-        this.position = position;
-        this.Spawnpoint = position;
+        position = pos;
+        Spawnpoint = pos;
     }
     public override void step(TIM.main game)
     {
         if(!trackEntity && route == null){
             initIdleMovement(game);
+        }
+        if(isDead){
+            PlayerMaterials.Food += food;
         }
         base.step(game);
     }
@@ -33,6 +36,6 @@ public abstract class Wildlife: Creature{
             targetY = game.mapsize.Y -1;
         }
         target = new Position(targetX,targetY);
-            setRoute(game.gameMap.mapArray);
+        setRoute(game.gameMap.mapArray);
     }
 }

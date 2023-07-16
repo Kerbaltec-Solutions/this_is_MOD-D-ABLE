@@ -48,7 +48,7 @@ public class Node{
     }
 
     // returns all neighbour nodes
-    public List<Node> GetAdjacentWalkableNodes(Dictionary<Position,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = false)
+    public List<Node> GetAdjacentWalkableNodes(Dictionary<Position,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = true)
     {
         List<Node> walkableNodes = new List<Node>();
         Position[] nextPositions= GetAdjacentPositions();
@@ -66,7 +66,7 @@ public class Node{
 
             try{
                 // ignore notWalkable nodes if ignoreNotWalkeble 
-                if (ignoreNotWalkable &&!nodes[position].IsWalkable)
+                if (ignoreNotWalkable && !nodes[position].IsWalkable)
                     continue;
 
                 // Ignore nodes that are already closed
@@ -90,7 +90,7 @@ public class Node{
                 // create new node with <this> as parent -> add to nodes directionary
                 nodes.Add(position,new Node(position,this,maparr[position.X,position.Y].resource.IsWalkable,maparr[position.X,position.Y].resource.SpeedDevider)); 
                 // Ignore notWalkable nodes if ignoreNotWakable 
-                if (ignoreNotWalkable &&!nodes[position].IsWalkable)
+                if (ignoreNotWalkable && !nodes[position].IsWalkable)
                     continue;  
                 nodes[position].State = NodeState.Open;    
                 nodes[position].G = nodes[position].ParentNode!.G + nodes[position].ParentNode!.Cost;
@@ -118,7 +118,7 @@ public class Route{
 
     private int maxIterations = 10000;
 
-    private Node Search(Node startNode, int sx, int sy)
+    private Node? Search(Node startNode, int sx, int sy)
         {
             // save discovered nodes in directionary -> key is their position
             Dictionary<Position,Node> discoveredNodes = new Dictionary<Position,Node>();
@@ -134,11 +134,11 @@ public class Route{
                 Node nextNode;
                 if(nextNodes.Count>= 1){
                     nextNode = nextNodes[0];
-                }else{
+                }else if(ignoreNotWalkable){
                     // if no path could be found: search again while considering notWalkable nodes
                     ignoreNotWalkable = false;
                     return Search(startNode,sx,sy);
-                }
+                }else{return null;}
                 discoveredNodes[nextNode.Pos].State = NodeState.Closed;
                 
                 if (nextNode.Pos == this.targetNode.Pos)
@@ -158,12 +158,13 @@ public class Route{
 
     public  void findRoute(int sX, int sY){
         // if targetNode not walkable: consider notWalkable nodes to get "as near as possible" to target
-        if(!targetNode.IsWalkable){ignoreNotWalkable = true;}
+        if(!targetNode.IsWalkable){ignoreNotWalkable = false;}
+
         // if entitycanDestroy stone: notWalkable nodes are now walkable
-        if(entityCanDestroyStone){ignoreNotWalkable = true;}
+        if(entityCanDestroyStone){ignoreNotWalkable = false;}
 
         List<Node> pathNodes = new List<Node>();       
-        Node endNode = Search(this.startNode, sX, sY);
+        Node? endNode = Search(this.startNode, sX, sY);
 
         if (endNode!= null)
         {
@@ -178,10 +179,10 @@ public class Route{
 
             // if there are nodes in the path that aren't walkable for the entity:
             // remove all nodes after first occurence of a not Walkable node
-            if(ignoreNotWalkable && !entityCanDestroyStone){ 
+            if(!ignoreNotWalkable && !entityCanDestroyStone){ 
                 for(int i = 0; i < pathNodes.Count; i++){
                     if(!pathNodes[i].IsWalkable){
-                        if(i ==0){
+                        if(i == 0){
                             targetNode = startNode; 
                             Path = null;
                             return;
@@ -190,7 +191,6 @@ public class Route{
                         targetNode = pathNodes[i-1]; // set target node to last possible walkable node of path
                         break;
                     }
-                i++;
                 } 
             } 
             Path = new List<Position>();
@@ -210,6 +210,7 @@ public class Route{
         targetNode = new Node(target,null,maparr[target.X,target.Y].resource.IsWalkable, maparr[target.X,target.Y].resource.SpeedDevider);
 
         this.entityCanDestroyStone = entityCanDestroyStone;
+        ignoreNotWalkable = true;
         findRoute(sx,sy);  
     }
 
