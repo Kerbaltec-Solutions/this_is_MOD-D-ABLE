@@ -4,14 +4,14 @@ public class Worker :Creature{
     public override bool controlledByPlayer{get;} = true;
     public override char mapChar{get;} = 'W';
     public override int mapColor{get;} = 0;
-    public override float speed{get;} = 7; // in fields per second
+    protected override float speed{get;} = 7; // in fields per second
 
-    public override  int maxHealthPoints {get;} = 10;
-    public override int healthPoints{get;set;} = 10;
+    protected override  int maxHealthPoints {get;} = 10;
+    protected override int healthPoints{get;set;} = 10;
 
-    public bool entityCanDestroyStone = true; // worker is able to create mines
+    private bool entityCanDestroyStone = true; // worker is able to create mines
 
-    public int mineSpeed{get;} = 1; // in hits per second
+    private int mineSpeed{get;} = 1; // in hits per second
     private float timeSinceLastHit = 0;
 
     public override void step(TIM.main game)
@@ -21,7 +21,7 @@ public class Worker :Creature{
     }
 
     // override: to change stone or snow if worker destroys them
-    public override void move(){
+    protected override void move(){
          if(trackEntity){
             updateMovement(this.game.gameMap.mapArray);
         }
@@ -57,10 +57,10 @@ public class Worker :Creature{
     }
 
     // override: worker is able to destroy stone
-    public override void setRoute(mapPixel[,] maparr){
+    protected override void setRoute(mapPixel[,] maparr){
         if(this.target is not null){
             this.route = new Route(maparr, this.position, target, entityCanDestroyStone);
-            target = this.route.targetNode.Pos;
+            target = this.route.targetPos;
         }     
     }
 

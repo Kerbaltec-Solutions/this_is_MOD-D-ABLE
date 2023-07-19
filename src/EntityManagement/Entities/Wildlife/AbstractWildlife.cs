@@ -3,8 +3,8 @@ public abstract class Wildlife: Creature{
     public bool isWildlife{get;} = true;
     public override bool createByPlayer{get;} = false;
     public override bool controlledByPlayer{get;} = false;
-    public  Position Spawnpoint{get;set;} = null!; 
-    public abstract int territoryRange{get;} // radius of territory (around spawnpoint)
+    protected  Position Spawnpoint = null!; 
+    protected abstract int territoryRange{get;} // radius of territory (around spawnpoint)
 
     public abstract int food {get;}
 
@@ -25,7 +25,7 @@ public abstract class Wildlife: Creature{
     }
 
     // initializes new route to a point in the territory
-    public void initIdleMovement(TIM.main game){
+   protected void initIdleMovement(TIM.main game){
         System.Random rand = new System.Random();
         int targetX = Spawnpoint.X + rand.Next(-territoryRange-1,territoryRange+1);
         int targetY = Spawnpoint.Y + rand.Next(-territoryRange-1,territoryRange+1);

@@ -1,8 +1,8 @@
 public abstract class Fighter :Creature{
-    public abstract int damage{get;} // damage the fighter deals per hit
-    public abstract int hitRange{get;} // maximal distance to target in which fighter can deal damage
+    protected abstract int damage{get;} // damage the fighter deals per hit
+    protected abstract int hitRange{get;} // maximal distance to target in which fighter can deal damage
 
-    public abstract float hitSpeed{get;} // in hit per second
+    protected abstract float hitSpeed{get;} // in hit per second
     private float timeSinceLastHit = 0; // in seconds
 
     public override void step(TIM.main game)

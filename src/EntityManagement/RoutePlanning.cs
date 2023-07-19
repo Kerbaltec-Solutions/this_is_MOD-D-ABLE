@@ -6,27 +6,27 @@ namespace RoutePlanning;
 // Path finding algorithm for entities using simple version of A*
 
 // class for Nodes of weighted graph:
-public class Node{
-    public bool IsWalkable{get; set;} //should node be ignored
-    public Position Pos{get;private set;} 
-    public Node? ParentNode{get; set;} 
-    public NodeState State{get; set;}
+internal class Node{
+    internal bool IsWalkable{get; set;} //should node be ignored
+    internal Position Pos{get;private set;} 
+    internal Node? ParentNode{get; set;} 
+    internal NodeState State{get; set;}
 
-    public int Cost{get; private set;} // equals from speedDevider of Resource type (on that position)
+    internal int Cost{get; private set;} // equals from speedDevider of Resource type (on that position)
 
-    public float G { get; private set; } // cost until now
+    internal float G { get; private set; } // cost until now
 
     // heuristic minimal cost to target 
     //-> minimal cost per field  =  1 -> H = distance to tagret (minimizes possible cost)
-    public float H { get; private set; } 
-    public float F { get { return this.G + this.H; } } // sum of G and H 
+    internal float H { get; private set; } 
+    internal float F { get { return this.G + this.H; } } // sum of G and H 
 
-    public float getDistance(Position target){
+    internal float getDistance(Position target){
         // using pythagoras
         return (float)Math.Sqrt(Math.Pow(this.Pos.X - target.X,2)+ Math.Pow(this.Pos.Y - target.Y,2));
     }
 
-    public Node(Position pos, Node? parentNode, bool isWalkable, int cost){
+    internal Node(Position pos, Node? parentNode, bool isWalkable, int cost){
         Pos = pos;
         ParentNode = parentNode;
         IsWalkable = isWalkable;
@@ -37,7 +37,7 @@ public class Node{
     }
 
     // returns positions of possible neighbouring nodes (entities can only walk up/down/left/right)
-    public Position[] GetAdjacentPositions(){
+    private Position[] GetAdjacentPositions(){
         Position[] adjacentPositions = new Position[4];
 
         adjacentPositions[0] = new Position(Pos.X+1, Pos.Y);
@@ -48,7 +48,7 @@ public class Node{
     }
 
     // returns all neighbour nodes
-    public List<Node> GetAdjacentWalkableNodes(Dictionary<Position,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = true)
+    internal List<Node> GetAdjacentWalkableNodes(Dictionary<Position,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = true)
     {
         List<Node> walkableNodes = new List<Node>();
         Position[] nextPositions= GetAdjacentPositions();
@@ -104,13 +104,14 @@ public class Node{
 }
 
 // three different states for nodes
-public enum NodeState { Untested, Open, Closed }
+internal enum NodeState { Untested, Open, Closed }
 
 // class for route
 public class Route{
-    public Node targetNode{get; private set;}
-    public Node startNode{get; private set;}
+    private Node targetNode;
+    private Node startNode;
     public List<Position>? Path{get; private set;}
+    public Position targetPos{get;private set;}
 
     private mapPixel[,] maparr; // reference to map
     private bool ignoreNotWalkable = true; // if true: excludes notWalkable nodes from path 
@@ -156,7 +157,7 @@ public class Route{
             return nextNodes[0];
         }
 
-    public  void findRoute(int sX, int sY){
+    private void findRoute(int sX, int sY){
         // if targetNode not walkable: consider notWalkable nodes to get "as near as possible" to target
         if(!targetNode.IsWalkable){ignoreNotWalkable = false;}
 
@@ -212,6 +213,7 @@ public class Route{
         this.entityCanDestroyStone = entityCanDestroyStone;
         ignoreNotWalkable = true;
         findRoute(sx,sy);  
+        targetPos = targetNode.Pos;
     }
 
     public override string ToString()

@@ -4,21 +4,18 @@ public class BowFighter : Fighter{
     public override char mapChar{get;} = 'B';
     public override int mapColor{get;} = 0;
 
-    public override  int maxHealthPoints {get;} = 9;
-    public override int healthPoints{get;set;} = 9;
-    public override float speed{get;} = 10; // in fields per second
+    protected override  int maxHealthPoints {get;} = 9;
+    protected override int healthPoints{get;set;} = 9;
+    protected override float speed{get;} = 10; // in fields per second
 
-    public override int damage{get;} = 1;
-    public override int hitRange{get;} = 10; // range of bow in fields
+    protected override int damage{get;} = 1;
+    protected override int hitRange{get;} = 10; // range of bow in fields
 
     private float optimalDistanceToTarget = 8; // distance to target that bow aims to have
 
-    public override float hitSpeed{get;} = (float)0.5; // in hit per seconds
+    protected override float hitSpeed{get;} = (float)0.5; // in hit per seconds
 
-    public static int FoodCost  = 2;
-    public static int MoneyCost = 4;
-
-    public override void updateMovement(mapPixel[,] maparr)
+    protected override void updateMovement(mapPixel[,] maparr)
     {
         if(tgtEntity != null){
             var posP= tgtEntity.fType.GetProperty("position");

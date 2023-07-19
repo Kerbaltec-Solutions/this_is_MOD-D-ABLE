@@ -2,19 +2,19 @@ public class Bear: Wildlife{
     public override char mapChar{get;} = 'E';
     public override int mapColor{get;} = 4;
 
-    public override  int maxHealthPoints {get;} = 5;
-    public override int healthPoints{get;set;} = 5;
-    public override float speed{get;} = 7; // in fields per second
-    public override int territoryRange{get;} = 10;
+    protected override  int maxHealthPoints {get;} = 5;
+    protected override int healthPoints{get;set;} = 5;
+    protected override float speed{get;} = 7; // in fields per second
+    protected override int territoryRange{get;} = 10;
 
     public override int food{get;} = 4;
 
-    public int maxDistanceToSpawn {get{return 3* territoryRange;}} // maximal distance the entity can have to spawn
+    protected int maxDistanceToSpawn {get{return 3* territoryRange;}} // maximal distance the entity can have to spawn
 
-    public  int damage{get;} = 1; // damage the fighter deals per hit
-    public  int hitRange{get;} = 1; // maximal distance to target in which fighter can deal damage
+    private  int damage = 1; // damage the fighter deals per hit
+    private  int hitRange = 1; // maximal distance to target in which fighter can deal damage
 
-    public  float hitSpeed{get;} = (float)0.5; // in hit per second
+    private  float hitSpeed = (float)0.5; // in hit per second
     private float timeSinceLastHit = 0; // in seconds
 
     public override void step(TIM.main game)
@@ -27,7 +27,7 @@ public class Bear: Wildlife{
         checkAttack();
     }
 
-    public override void updateMovement(mapPixel[,] maparr)
+    protected override void updateMovement(mapPixel[,] maparr)
     {
         if(getDistanceToSpawn()> 3*territoryRange){ // if position is too far away from spawn, return to territory
             trackEntity = false;

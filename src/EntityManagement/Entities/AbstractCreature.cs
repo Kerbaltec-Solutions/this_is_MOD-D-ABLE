@@ -1,7 +1,7 @@
 using RoutePlanning;
 public abstract class Creature{
 
-    public TIM.main game = null!; // reference go game
+    protected TIM.main game = null!; // reference go game
     public bool draw{get;} = true; //if the entity should be drawn on the map
     public bool iterate{get;} = true;  //if the entity has actions to perform every frame
     public abstract  bool createByPlayer{get;}    //can the entity be created by the player directly
@@ -9,20 +9,20 @@ public abstract class Creature{
     public abstract bool controlledByPlayer{get;} // can the player controll the entity
     public abstract char mapChar{get;}     //character which will represent the entity on the map
     public abstract int mapColor{get;}  //color in which the entity will be drawn on the map
-    public abstract float speed{get;} //movement speed of the entity in fields per second
+    protected abstract float speed{get;} //movement speed of the entity in fields per second
 
-    public bool isDead{get;set;} = false; 
+    protected bool isDead{get;set;} = false; 
 
-    public abstract  int maxHealthPoints {get;}
-    public abstract int healthPoints{get;set;}
+    protected abstract  int maxHealthPoints {get;}
+    protected abstract int healthPoints{get;set;}
 
 
     public Position position{get;set;} = null!;  //current position of the entity
-    public Position? target = null;    //target position 
-    public Route? route = null;   // currently assigned route
-    public functionProperties? tgtEntity = null; // target entity
-    public bool trackEntity = false; // is currently following entity
-    public float timeSinceLastMove = TIM.main.STEPTIME; // in seconds
+    protected Position? target = null;    //target position 
+    protected Route? route = null;   // currently assigned route
+    protected functionProperties? tgtEntity = null; // target entity
+    protected bool trackEntity = false; // is currently following entity
+    protected float timeSinceLastMove = TIM.main.STEPTIME; // in seconds
     
 
     //setup function, set position ect.
@@ -48,7 +48,7 @@ public abstract class Creature{
     }
 
     // move a certain distance
-    public virtual void move(){
+    protected virtual void move(){
         if(trackEntity){
             updateMovement(this.game.gameMap.mapArray);
         }
@@ -78,15 +78,15 @@ public abstract class Creature{
         } 
     }
     // create new route
-    public virtual void setRoute(mapPixel[,] maparr){
+    protected virtual void setRoute(mapPixel[,] maparr){
         if(this.target is not null){
             this.route = new Route(maparr, this.position, target);
-            target = this.route.targetNode.Pos;
+            target = this.route.targetPos;
         }
     }
 
     // update path to target entity
-    public virtual void updateMovement(mapPixel[,] maparr){
+    protected virtual void updateMovement(mapPixel[,] maparr){
         if(tgtEntity != null){
             // tgtEntity always has position (tested in GoToEntity)
             var posVar= tgtEntity.fType.GetProperty("position");
@@ -97,7 +97,7 @@ public abstract class Creature{
     }
 
     // divide speed by speedDivider of resource on current position
-    public float getModifiedSpeed(){
+    protected float getModifiedSpeed(){
         return speed/this.game.gameMap.mapArray[position.X,position.Y].resource.SpeedDevider;
     }
 
