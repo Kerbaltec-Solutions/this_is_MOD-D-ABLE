@@ -19,7 +19,7 @@ public abstract class Wildlife: Creature{
             initIdleMovement(game);
         }
         if(isDead){
-            PlayerMaterials.Food += food;
+            game.materials.Food += food;
         }
         base.step(game);
     }

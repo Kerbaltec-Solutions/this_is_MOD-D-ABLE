@@ -127,10 +127,10 @@ public class system{
     }
 
     public void printFood(TIM.main game){
-        Console.WriteLine("Food: {0}", PlayerMaterials.Food);
+        Console.WriteLine("Food: {0}", game.materials.Food);
     }
     public void printMoney(TIM.main game){
-        Console.WriteLine("Money: {0}", PlayerMaterials.Money);
+        Console.WriteLine("Money: {0}", game.materials.Money);
     }
     public void printMaterials(TIM.main game){
         printFood(game);

@@ -19,7 +19,7 @@ public class Ore{
 
     public void step(TIM.main game){
         if(isDestroyed){
-            PlayerMaterials.Money += money; 
+            game.materials.Money += money; 
             throw new NotSupportedException("Ore was destroyed");
         }
     }

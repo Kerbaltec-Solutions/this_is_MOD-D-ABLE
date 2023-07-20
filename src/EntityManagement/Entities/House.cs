@@ -1,5 +1,6 @@
 // entity that can be build by player, that is able to spawn entities that are controlled by the player
 public class House{
+    private TIM.main game = null!;
     public bool createByPlayer{get;} = true;
     public bool isHouse{get;} = true;
     public  bool draw{get;} = true;
@@ -20,17 +21,17 @@ public class House{
     private int checkMaterials(string entityClass){
         switch(entityClass){
             case "Worker":{
-                if(PlayerMaterials.Food >= 2){
+                if(game.materials.Food >= 2){
                     return 1;
                 }else{return 0;}
             }
             case "SwordFighter":{
-                if(PlayerMaterials.Food >= 2 && PlayerMaterials.Money >= 2){
+                if(game.materials.Food >= 2 && game.materials.Money >= 2){
                     return 1;
                 }else{return 0;}
             }
             case "BowFighter":{
-                if(PlayerMaterials.Food >= 2 && PlayerMaterials.Money >= 4){
+                if(game.materials.Food >= 2 && game.materials.Money >= 4){
                     return 1;
                 }else{return 0;}
             }
@@ -41,17 +42,17 @@ public class House{
     private void subtractMaterials(string entityClass){
         switch(entityClass){
             case "Worker":{            
-                PlayerMaterials.Food -= 2;
+                game.materials.Food-= 2;
                 break;
             }
             case "SwordFighter":{
-                PlayerMaterials.Food -= 2;
-                PlayerMaterials.Money -= 2;
+                game.materials.Food -= 2;
+                game.materials.Money -= 2;
                 break;
             }
             case "BowFighter":{
-                PlayerMaterials.Food -= 2;
-                PlayerMaterials.Money -= 4;
+                game.materials.Food-= 2;
+                game.materials.Money -= 4;
                 break;
             }
             default: return;
