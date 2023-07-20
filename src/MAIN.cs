@@ -29,7 +29,7 @@ public class TIM{
         public main(){
             //parameter initialisation
             gameMap=new map(mapsize.X,mapsize.Y);
-            materials = new PlayerMaterials();
+            materials = new PlayerMaterials(4,4);
             exit = false;
             entities = new Dictionary<string,functionProperties>();
             zoom=1;
