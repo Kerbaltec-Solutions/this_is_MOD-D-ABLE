@@ -32,6 +32,7 @@ In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend its
 - open the console
 - Navigate inside the folder "this_is_MOD-D-ABLE"
 - ensure, you have .NET 6.0 installed
+- on first run, first use "dotnet add Package Accord" to install neccesarry Libraries
 - start the program by typing "dotnet run"
 - press ENTER to switch in and out of the command input mode.
 - in the input mode, type sys:help() to view a list of available commands. (not yet implemented)
