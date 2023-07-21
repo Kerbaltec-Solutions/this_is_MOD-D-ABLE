@@ -8,7 +8,8 @@ public class House{
     public  int mapColor{get;} = 4;
     public Position position{get;set;} = null!;
 
-    public void setup(string input, TIM.main game){
+    public void setup(string input, TIM.main g){
+        game=g;
         this.position= new Position(Math.Min(int.Parse(input.Split(",")[0]),game.mapsize.X),Math.Min(int.Parse(input.Split(",")[1]),game.mapsize.Y));
         if(!game.gameMap.mapArray[position.X,position.Y].resource.IsWalkable){
             throw new NotSupportedException("Position not valid");
@@ -101,7 +102,7 @@ public class House{
             }
         }  
     }
-    public void nE(string input,TIM.main game){
+    public void nE(string input,TIM.main g){
         spawnEntity(input,game);
     }
 }
