@@ -15,8 +15,8 @@ public class ui{
         outp+=" ##:::: ##:. #######:: ######:::::. ###:::. ######: ###::: ##:::: ##: ########:: ########: ########:\n";
         outp+="..:::::..:::.......:::........:::::...::........:::...::::..:::::..::........:::........::........::\n";
         outp+="\n\nVersion: "+TIM.version+"\n";
-        outp+="\n press ENTER to enter and exit input mode\n"
-        outp+=" in input mode enter \"sys:help()\" for tutorial\n"
+        outp+="\n press ENTER to enter and exit input mode\n";
+        outp+=" in input mode enter \"sys:help()\" for tutorial\n";
         outp+=" press any key to start";
         Console.WriteLine(outp);
     }

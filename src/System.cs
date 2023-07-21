@@ -139,9 +139,10 @@ public class system{
     }
     //print the tutorial to the console
     public void help(TIM.main game){
-        String line;
+        Console.Clear();
+        String? line;
         try{
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "tutorial/main-tutoral.txt");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "tutorial/main-tutorial.txt");
             StreamReader sr = new StreamReader(path); //open the tutorial file
             line = sr.ReadLine();
             while (line != null){//write each line of the file to the console
@@ -154,6 +155,7 @@ public class system{
         catch(Exception e){
             Console.WriteLine("Exception: " + e.Message);
         }
+        Console.WriteLine("\n#==================================#");
     }
 
     //universal step function which is executed every frame
