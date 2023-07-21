@@ -11,11 +11,11 @@ import: https://github.com/liascript/CodeRunner
         https://raw.githubusercontent.com/liascript-templates/plantUML/master/README.md
         https://raw.githubusercontent.com/liaTemplates/ExplainGit/master/README.md
 
--->!
+-->
 
 [![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/blob/master/README.md)
 
-[logo](https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/assets/61379284/6656a1be-4630-4b50-94ab-39ce8dfa382c)
+![logo](https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/assets/61379284/6656a1be-4630-4b50-94ab-39ce8dfa382c)
 
 # This is MOD(D)ABLE
 
