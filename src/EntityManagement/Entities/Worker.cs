@@ -1,6 +1,6 @@
 using RoutePlanning;
 public class Worker :Creature{
-    public override  bool createByPlayer{get;} = true;
+    public override  bool createByPlayer{get;} = false;
     public override bool controlledByPlayer{get;} = true;
     public override char mapChar{get;} = 'W';
     public override int mapColor{get;} = 0;
@@ -69,12 +69,12 @@ public class Worker :Creature{
         if(target is not null && trackEntity){
             if(getDistanceToTarget() <= 1){
                 if(this.timeSinceLastHit* mineSpeed >= 1){
-                        float steps = timeSinceLastHit*mineSpeed;
-                        this.timeSinceLastHit = 0;
-                        for(int i = 0; i< steps;i++){
-                            mineOre(game);
-                        }                
-                    }   
+                    float steps = timeSinceLastHit*mineSpeed;
+                    this.timeSinceLastHit = 0;
+                    for(int i = 0; i< steps;i++){
+                        mineOre(game);
+                    }                
+                }   
             }
             this.timeSinceLastHit += TIM.main.STEPTIME;  
         }        
@@ -83,16 +83,22 @@ public class Worker :Creature{
     // hits an Ore and reduces its durability
     private void mineOre(TIM.main game){
         if(tgtEntity != null){
-            try{
-                tgtEntity.fType.GetMethod("getHit")!.Invoke(tgtEntity.fObject, new object[]{1});
-                var tgtHPP = tgtEntity.fType.GetProperty("durability");
-                if(tgtHPP != null){
-                    int tgtHP = (int)tgtHPP.GetValue(tgtEntity.fObject, null)!;
-                    if(tgtHP<= 0){
-                        tgtEntity = null;
-                    }
+            var oreP = tgtEntity.fType.GetProperty("isOre");
+            if(oreP != null){
+                bool ore = (bool)oreP.GetValue(tgtEntity.fObject, null)!;
+                if(ore){
+                    try{
+                        tgtEntity.fType.GetMethod("getHit")!.Invoke(tgtEntity.fObject, new object[]{1});
+                        var tgtHPP = tgtEntity.fType.GetProperty("durability");
+                        if(tgtHPP != null){
+                            int tgtHP = (int)tgtHPP.GetValue(tgtEntity.fObject, null)!;
+                            if(tgtHP<= 0){
+                                tgtEntity = null;
+                            }
+                        }
+                    }catch(NullReferenceException){}    
                 }
-            }catch(NullReferenceException){}            
+            }    
         }        
     }
 

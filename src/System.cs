@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.IO;
 
 public class system{
     public static bool iterate {get;}=true;
@@ -132,9 +133,27 @@ public class system{
     public void printMoney(TIM.main game){
         Console.WriteLine("Money: {0}", game.materials.Money);
     }
-    public void printMaterials(TIM.main game){
+    public void printRes(TIM.main game){
         printFood(game);
         printMoney(game);
+    }
+    //print the tutorial to the console
+    public void help(TIM.main game){
+        String line;
+        try{
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "tutorial/main-tutoral.txt");
+            StreamReader sr = new StreamReader(path); //open the tutorial file
+            line = sr.ReadLine();
+            while (line != null){//write each line of the file to the console
+                Console.WriteLine(line);
+                line = sr.ReadLine();
+            }
+            sr.Close();     //cleanup
+            Console.ReadLine();
+        }
+        catch(Exception e){
+            Console.WriteLine("Exception: " + e.Message);
+        }
     }
 
     //universal step function which is executed every frame
