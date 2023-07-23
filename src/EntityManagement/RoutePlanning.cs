@@ -20,7 +20,6 @@ internal class Node{
     //-> minimal cost per field  =  1 -> H = distance to tagret (minimizes possible cost)
     internal float H { get; private set; } 
     internal float F { get { return this.G + this.H; } } // sum of G and H 
-
     internal float getDistance(Position target){
         // using pythagoras
         return (float)Math.Sqrt(Math.Pow(this.Pos.X - target.X,2)+ Math.Pow(this.Pos.Y - target.Y,2));
@@ -140,6 +139,7 @@ public class Route{
                     ignoreNotWalkable = false;
                     return Search(startNode,sx,sy);
                 }else{return null;}
+               
                 discoveredNodes[nextNode.Pos].State = NodeState.Closed;
                 
                 if (nextNode.Pos == this.targetNode.Pos)

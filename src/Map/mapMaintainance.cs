@@ -179,6 +179,7 @@ public class map{
             }
         }
     }
+  
     public entityProperties[] listRadius(int x, int y, int r){
         List<entityProperties> eList=new List<entityProperties>();
         for(int i=0; i<=r; i++){

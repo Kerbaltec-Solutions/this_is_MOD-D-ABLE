@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "0.1.8-dev"; //public variable for the versioning info
+    public static string version {get;} = "1.0.0-nightly"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -20,6 +20,7 @@ public class TIM{
         public Position center_pos {get; set;}  //center position of the camera
         public Position mapsize {get;} = new Position(100,100); //size of the game map
         public PlayerMaterials materials{get;set;}
+
         public main? game{get; private set;}    //the game itself
         public bool input_interrupt{get; set;}  //boolean, if true, the imput mode is opened
         public Thread InpH{get; set;}   //Input handler

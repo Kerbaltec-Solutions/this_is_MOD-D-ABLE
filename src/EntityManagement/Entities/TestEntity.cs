@@ -11,7 +11,6 @@ public class TestEntity{
     public int mapColor{get;} = 0;  //color in which the entity will be drawn on the map
     public float speed{get;}=4; //movement speed of the entity
 
-
     public Position position{get;set;} = null!;  //current position of the entity
     private Position? target = null;    //target position 
     public Route? route = null;    
