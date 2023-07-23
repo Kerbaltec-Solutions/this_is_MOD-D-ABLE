@@ -6,27 +6,26 @@ namespace RoutePlanning;
 // Path finding algorithm for entities using simple version of A*
 
 // class for Nodes of weighted graph:
-public class Node{
-    public bool IsWalkable{get; set;} //should node be ignored
-    public Position Pos{get;private set;} 
-    public Node? ParentNode{get; set;} 
-    public NodeState State{get; set;}
+internal class Node{
+    internal bool IsWalkable{get; set;} //should node be ignored
+    internal Position Pos{get;private set;} 
+    internal Node? ParentNode{get; set;} 
+    internal NodeState State{get; set;}
 
-    public int Cost{get; private set;} // equals from speedDevider of Resource type (on that position)
+    internal int Cost{get; private set;} // equals from speedDevider of Resource type (on that position)
 
-    public float G { get; private set; } // cost until now
+    internal float G { get; private set; } // cost until now
 
     // heuristic minimal cost to target 
     //-> minimal cost per field  =  1 -> H = distance to tagret (minimizes possible cost)
-    public float H { get; private set; } 
-    public float F { get { return this.G + this.H; } } // sum of G and H 
-
-    public float getDistance(Position target){
+    internal float H { get; private set; } 
+    internal float F { get { return this.G + this.H; } } // sum of G and H 
+    internal float getDistance(Position target){
         // using pythagoras
         return (float)Math.Sqrt(Math.Pow(this.Pos.X - target.X,2)+ Math.Pow(this.Pos.Y - target.Y,2));
     }
 
-    public Node(Position pos, Node? parentNode, bool isWalkable, int cost){
+    internal Node(Position pos, Node? parentNode, bool isWalkable, int cost){
         Pos = pos;
         ParentNode = parentNode;
         IsWalkable = isWalkable;
@@ -37,7 +36,7 @@ public class Node{
     }
 
     // returns positions of possible neighbouring nodes (entities can only walk up/down/left/right)
-    public Position[] GetAdjacentPositions(){
+    private Position[] GetAdjacentPositions(){
         Position[] adjacentPositions = new Position[4];
 
         adjacentPositions[0] = new Position(Pos.X+1, Pos.Y);
@@ -48,7 +47,7 @@ public class Node{
     }
 
     // returns all neighbour nodes
-    public List<Node> GetAdjacentWalkableNodes(Dictionary<Position,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = false)
+    internal List<Node> GetAdjacentWalkableNodes(Dictionary<Position,Node>nodes, int sx, int sy, Node target, mapPixel[,] maparr, bool ignoreNotWalkable = true)
     {
         List<Node> walkableNodes = new List<Node>();
         Position[] nextPositions= GetAdjacentPositions();
@@ -66,7 +65,7 @@ public class Node{
 
             try{
                 // ignore notWalkable nodes if ignoreNotWalkeble 
-                if (ignoreNotWalkable &&!nodes[position].IsWalkable)
+                if (ignoreNotWalkable && !nodes[position].IsWalkable)
                     continue;
 
                 // Ignore nodes that are already closed
@@ -90,7 +89,7 @@ public class Node{
                 // create new node with <this> as parent -> add to nodes directionary
                 nodes.Add(position,new Node(position,this,maparr[position.X,position.Y].resource.IsWalkable,maparr[position.X,position.Y].resource.SpeedDevider)); 
                 // Ignore notWalkable nodes if ignoreNotWakable 
-                if (ignoreNotWalkable &&!nodes[position].IsWalkable)
+                if (ignoreNotWalkable && !nodes[position].IsWalkable)
                     continue;  
                 nodes[position].State = NodeState.Open;    
                 nodes[position].G = nodes[position].ParentNode!.G + nodes[position].ParentNode!.Cost;
@@ -104,13 +103,14 @@ public class Node{
 }
 
 // three different states for nodes
-public enum NodeState { Untested, Open, Closed }
+internal enum NodeState { Untested, Open, Closed }
 
 // class for route
 public class Route{
-    public Node targetNode{get; private set;}
-    public Node startNode{get; private set;}
+    private Node targetNode;
+    private Node startNode;
     public List<Position>? Path{get; private set;}
+    public Position targetPos{get;private set;}
 
     private mapPixel[,] maparr; // reference to map
     private bool ignoreNotWalkable = true; // if true: excludes notWalkable nodes from path 
@@ -118,7 +118,7 @@ public class Route{
 
     private int maxIterations = 10000;
 
-    private Node Search(Node startNode, int sx, int sy)
+    private Node? Search(Node startNode, int sx, int sy)
         {
             // save discovered nodes in directionary -> key is their position
             Dictionary<Position,Node> discoveredNodes = new Dictionary<Position,Node>();
@@ -134,17 +134,17 @@ public class Route{
                 Node nextNode;
                 if(nextNodes.Count>= 1){
                     nextNode = nextNodes[0];
-                }else{
+                }else if(ignoreNotWalkable){
                     // if no path could be found: search again while considering notWalkable nodes
                     ignoreNotWalkable = false;
                     return Search(startNode,sx,sy);
-                }
+                }else{return null;}
+               
                 discoveredNodes[nextNode.Pos].State = NodeState.Closed;
                 
                 if (nextNode.Pos == this.targetNode.Pos)
                 {
-                    targetNode.ParentNode = nextNode.ParentNode;
-                    return targetNode;
+                    return nextNode;
                 }
                 else
                 {
@@ -157,14 +157,15 @@ public class Route{
             return nextNodes[0];
         }
 
-    public  void findRoute(int sX, int sY){
+    private void findRoute(int sX, int sY){
         // if targetNode not walkable: consider notWalkable nodes to get "as near as possible" to target
-        if(!targetNode.IsWalkable){ignoreNotWalkable = true;}
+        if(!targetNode.IsWalkable){ignoreNotWalkable = false;}
+
         // if entitycanDestroy stone: notWalkable nodes are now walkable
-        if(entityCanDestroyStone){ignoreNotWalkable = true;}
+        if(entityCanDestroyStone){ignoreNotWalkable = false;}
 
         List<Node> pathNodes = new List<Node>();       
-        Node endNode = Search(this.startNode, sX, sY);
+        Node? endNode = Search(this.startNode, sX, sY);
 
         if (endNode!= null)
         {
@@ -179,10 +180,10 @@ public class Route{
 
             // if there are nodes in the path that aren't walkable for the entity:
             // remove all nodes after first occurence of a not Walkable node
-            if(ignoreNotWalkable && !entityCanDestroyStone){ 
+            if(!ignoreNotWalkable && !entityCanDestroyStone){ 
                 for(int i = 0; i < pathNodes.Count; i++){
                     if(!pathNodes[i].IsWalkable){
-                        if(i ==0){
+                        if(i == 0){
                             targetNode = startNode; 
                             Path = null;
                             return;
@@ -191,7 +192,6 @@ public class Route{
                         targetNode = pathNodes[i-1]; // set target node to last possible walkable node of path
                         break;
                     }
-                i++;
                 } 
             } 
             Path = new List<Position>();
@@ -203,7 +203,7 @@ public class Route{
     }      
 
     // constructor of Route -> also creates path 
-    public Route(mapPixel[,] map, Position start, Position target,bool fastFind = false, bool entityCanDestroyStone = false){
+    public Route(mapPixel[,] map, Position start, Position target, bool entityCanDestroyStone = false){
         this.maparr = map;
         int sx =maparr.GetUpperBound(1)+1;
         int sy = maparr.GetUpperBound(0)+1;
@@ -211,7 +211,9 @@ public class Route{
         targetNode = new Node(target,null,maparr[target.X,target.Y].resource.IsWalkable, maparr[target.X,target.Y].resource.SpeedDevider);
 
         this.entityCanDestroyStone = entityCanDestroyStone;
+        ignoreNotWalkable = true;
         findRoute(sx,sy);  
+        targetPos = targetNode.Pos;
     }
 
     public override string ToString()

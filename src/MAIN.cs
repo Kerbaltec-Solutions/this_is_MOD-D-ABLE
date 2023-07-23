@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "0.1.0-nightly"; //public variable for the versioning info
+    public static string version {get;} = "1.0.0-nightly"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -19,6 +19,8 @@ public class TIM{
         public int zoom {get; set;} //zoom level
         public Position center_pos {get; set;}  //center position of the camera
         public Position mapsize {get;} = new Position(100,100); //size of the game map
+        public PlayerMaterials materials{get;set;}
+
         public main? game{get; private set;}    //the game itself
         public bool input_interrupt{get; set;}  //boolean, if true, the imput mode is opened
         public Thread InpH{get; set;}   //Input handler
@@ -28,6 +30,7 @@ public class TIM{
         public main(){
             //parameter initialisation
             gameMap=new map(mapsize.X,mapsize.Y);
+            materials = new PlayerMaterials(4,4);
             exit = false;
             entities = new Dictionary<string,functionProperties>();
             zoom=1;
@@ -39,7 +42,13 @@ public class TIM{
         public void Start(main g){
             game=g;
             gameMap.createTerrain();    //create Map
+            SpawnEntities spawner = new SpawnEntities();
+            spawner.spawnentities("Deer",game);
+            spawner.spawnentities("Bear",game);
+            spawner.spawnOre(game);
             entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
+            entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
+            methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
             InpH.Start();   //start the input handler
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open
@@ -68,8 +77,12 @@ public class TIM{
                                     stepMethod.Invoke(entity.fObject, new object[]{game}); //try to execute the step method
                                 }catch(TargetInvocationException ex){                        
                                     // ex now stores the original exception
-                                    if(ex.InnerException is NotSupportedException){
+                                    if(ex.InnerException is NotImplementedException){
                                         throw new NotImplementedException("FATAL: a entity was set to iterable but contains no step function!");
+                                    }
+                                    if(ex.InnerException is NotSupportedException){
+                                        // the entity doesnt exist anymore and can therefore be removed
+                                        entities.Remove(entry.Key);
                                     }
                                 }
                             }
@@ -89,7 +102,8 @@ public class TIM{
                 if(game==null){
                     throw new Exception("FATAL: Something tried to call the Input handler before a game was initialized properly.");
                 }
-                switch(cki){    //special quickkeys for panning and zooming the map
+                switch(cki){    
+                    //special quickkeys for panning and zooming the map
                     case ConsoleKey.Add:
                         sys.incZoom(-1,game);
                         break;
@@ -107,6 +121,19 @@ public class TIM{
                         break;
                     case ConsoleKey.RightArrow:
                         sys.incPosition(zoom,0,game);
+                        break;
+                    //special quickkeys for moving the cursor
+                    case ConsoleKey.A:
+                        methods.callMethod("c","iP","-1,0",game);
+                        break;
+                    case ConsoleKey.D:
+                        methods.callMethod("c","iP","1,0",game);
+                        break;
+                    case ConsoleKey.W:
+                        methods.callMethod("c","iP","0,-1",game);
+                        break;
+                    case ConsoleKey.S:
+                        methods.callMethod("c","iP","0,1",game);
                         break;
                     default:
                         break;

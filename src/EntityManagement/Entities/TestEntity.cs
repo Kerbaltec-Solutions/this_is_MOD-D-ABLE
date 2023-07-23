@@ -11,9 +11,6 @@ public class TestEntity{
     public int mapColor{get;} = 0;  //color in which the entity will be drawn on the map
     public float speed{get;}=4; //movement speed of the entity
 
-
-
-
     public Position position{get;set;} = null!;  //current position of the entity
     private Position? target = null;    //target position 
     public Route? route = null;    
@@ -60,7 +57,7 @@ public class TestEntity{
     // create new route
     public void setRoute(bool fastFind, mapPixel[,] maparr){
         this.route = new Route(maparr, this.position, target!);
-        target = this.route.targetNode.Pos;
+        target = this.route.targetPos;
     }
 
     // divide speed by speedDivider of resource on current position

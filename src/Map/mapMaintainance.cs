@@ -179,6 +179,106 @@ public class map{
             }
         }
     }
+  
+    public entityProperties[] listRadius(int x, int y, int r){
+        List<entityProperties> eList=new List<entityProperties>();
+        for(int i=0; i<=r; i++){
+            if(i==0){
+                try{
+                    foreach(entityProperties e in mapEntities[x,y]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dx=-i;dx<i;dx++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+dx,y+i]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dx=-i+1;dx<=i;dx++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+dx,y-i]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dy=-i;dy<i;dy++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+i,y+dy]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dy=-i+1;dy<=i;dy++){
+                try{
+                    foreach(entityProperties e in mapEntities[x-i,y+dy]){
+                        eList.Add(e);
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+        }
+        return eList.ToArray();
+    }
+
+    // return true if the entity has the property and its value is true, else return false
+    private bool unpackBool(entityProperties e, string P){
+        if(e.entity is null){return false;}
+        functionProperties entity = e.entity;
+        var boolVar= entity.fType.GetProperty(P);
+        if(boolVar!=null){
+            var boolVal= boolVar.GetValue(entity.fObject, null)!;
+            bool b = (bool)boolVal;
+            if(b){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // find nearest entity to a position in a given radius
+    public entityProperties? findNearestP(int x, int y, int r, string P){
+        for(int i=0; i<=r; i++){
+            for(int dx=-i;dx<=i;dx++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+dx,y+i]){
+                        if(unpackBool(e,P)){
+                            return(e);
+                        }
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dx=-i;dx<=i;dx++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+dx,y-i]){
+                        if(unpackBool(e,P)){
+                            return(e);
+                        }
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dy=-i;dy<=i;dy++){
+                try{
+                    foreach(entityProperties e in mapEntities[x+i,y+dy]){
+                        if(unpackBool(e,P)){
+                            return(e);
+                        }
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+            for(int dy=-i;dy<=i;dy++){
+                try{
+                    foreach(entityProperties e in mapEntities[x-i,y+dy]){
+                        if(unpackBool(e,P)){
+                            return(e);
+                        }
+                    }
+                }catch(System.IndexOutOfRangeException){}
+            }
+        }
+        return null;
+    }
 }
 
 //mapPixel class

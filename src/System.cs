@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.IO;
 
 public class system{
     public static bool iterate {get;}=true;
@@ -64,7 +65,8 @@ public class system{
                             this.displayMap(game);
                         }catch(TargetInvocationException ex){
                             if(ex.InnerException is NotSupportedException){
-                                Console.WriteLine("INF: No setup function for {0} found",inp[0]);
+                                game.entities.Remove(inp[1]);
+                                Console.WriteLine(ex.InnerException.Message);
                             }
                         } 
                     }
@@ -123,6 +125,37 @@ public class system{
         foreach(KeyValuePair<string, functionProperties> entry in game.entities){
             Console.WriteLine("{0}: {1} , {2}",entry.Key,entry.Value.fType);
         }
+    }
+
+    public void printFood(TIM.main game){
+        Console.WriteLine("Food: {0}", game.materials.Food);
+    }
+    public void printMoney(TIM.main game){
+        Console.WriteLine("Money: {0}", game.materials.Money);
+    }
+    public void printRes(TIM.main game){
+        printFood(game);
+        printMoney(game);
+    }
+    //print the tutorial to the console
+    public void help(TIM.main game){
+        Console.Clear();
+        String? line;
+        try{
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "tutorial/main-tutorial.txt");
+            StreamReader sr = new StreamReader(path); //open the tutorial file
+            line = sr.ReadLine();
+            while (line != null){//write each line of the file to the console
+                Console.WriteLine(line);
+                line = sr.ReadLine();
+            }
+            sr.Close();     //cleanup
+            Console.ReadLine();
+        }
+        catch(Exception e){
+            Console.WriteLine("Exception: " + e.Message);
+        }
+        Console.WriteLine("\n#==================================#");
     }
 
     //universal step function which is executed every frame
