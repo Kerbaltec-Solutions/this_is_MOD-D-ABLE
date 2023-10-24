@@ -22,6 +22,14 @@ public class system{
         game.gameMap.print();
     }
 
+    public static void saveMap(string filename, TIM.main game){
+        game.gameMap.save(filename);
+    }
+
+    public static void loadMap(string filename, TIM.main game){
+        game.gameMap.load(filename);
+    }
+
     //display the map 
     public void displayMap(TIM.main game){
         game.gameMap.display(game.center_pos.X-game.zoom*25,game.center_pos.Y-game.zoom*25,game.zoom*50,game.zoom*50,game.zoom,game);
