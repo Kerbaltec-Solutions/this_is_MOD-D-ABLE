@@ -37,19 +37,7 @@ In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend its
 - on first run, first use "dotnet add Package Accord" to install neccesarry Libraries
 - start the program by typing "dotnet run"
 - press ENTER to switch in and out of the command input mode.
-- in the input mode, type sys:help() to view a list of available commands. (not yet implemented)
-
-## Zielsetzung
-
-- Das Ziel ist das erstellen eines Management/Survival-Spiels ähnlich AoE in C# unter berücksichtigung der Modifizierbarkeit durch Dritte in der Zukunft.
-- Die Software soll als Sourcecode verteilt werden und erst bei Ausführung lokal compiliert werden.
-- Mittels System.Reflexion soll das Programm selbstständig die Funktionen der Entitäten des Spiels aufrufen können.
-- Die Steuerung des Spiels erfolgt hauptsächlich über pseudo-funktionsaufrufe, die der Spieler in die Konsole eingibt.
-- Um die Konsole zu öffnen und, um den gezeigten Kartenausschnitt zu ändern soll ein asyncroner Input handler mittels System.Threading geschrieben werden.
-- Das Spiel soll in Takten die Eigenschaften sämmtlicher Entitäten bearbeiten und zwar über eine Funktion der Entität, die angibt, was geschehen soll.
-- Die Karte, mit Ressourcen, Hindernissen und Farben soll mittels Perlin noise aus der Bibliothek Accord zufällig erzeugt werden.
-- Entitäten, die auf der Karte gezeigt werden, sollen über einen einzelnen Charakter repräsentiert werden.
-- Die Karte soll mittels variation der Hintergrundfarbe in der Konsole gezeichnet werden.
+- in the input mode, type sys:help() to view a list of available commands.
 
 ## Vorläufiges Dateizusammenhangsdiagramm
 <!--
@@ -82,21 +70,3 @@ style="width: 90%; max-width: 860px; display: block; margin-left: auto; margin-r
 +------------------------------------+
 
 ````
-
-## Einschränkung im Rahmen der Abschlussarbeit
-
-Es soll nur das Grundgerüst des Spiels sowie folgende Entitäten und Resourcen erstellt werden.
-
-Entitäten:
-
-- Fighter: Kann andere Entitäten umbringen, Kostet Nahrung und Geld
-- Worker: Kann Gestein & Ore abbauen, Kostet Nahrung
-- Wildlife (friendly): Kann von Fighter getötet werden, enthält Nahrung
-- Wildlife (aggresive): Kann andere Entitäten umbringen, Kann von Fighter getötet werden
-- Ore: Kann von Worker abgebaut werden, Enthält Geld
-- House: Kann Worker und Fighter ausbilden, Kostet Geld
-
-Resourcen:
-
-- Geld: produziert aus Ore von Worker
-- Nahrung: produziert aus Wildlife von Fighter

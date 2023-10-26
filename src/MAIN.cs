@@ -143,5 +143,30 @@ public class TIM{
             Console.WriteLine("Input mode open:");
             return; //quit the input handler, input from now on is handeled differently
         }
+
+        public void saveEntities(string filename){
+            BinaryWriter bw;
+         
+            //create the file
+            try {
+                bw = new BinaryWriter(new FileStream(filename, FileMode.Create));
+            } catch (IOException e) {
+                Console.WriteLine(e.Message + "\n Cannot create file.");
+                return;
+            }
+            
+            //writing into the file
+            try {
+                foreach(KeyValuePair<string, functionProperties> entry in entities){
+                    bw.Write(entry.Key);
+                    bw.Write((string)entry.Value.fObject);
+                }
+            } catch (IOException e) {
+                Console.WriteLine(e.Message + "\n Cannot write to file.");
+                return;
+            }
+            bw.Close();
+            Console.WriteLine("Map saved to "+filename);
+        }
     }
 }

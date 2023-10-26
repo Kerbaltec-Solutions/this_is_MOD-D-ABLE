@@ -35,6 +35,10 @@ public class system{
         game.gameMap.display(game.center_pos.X-game.zoom*25,game.center_pos.Y-game.zoom*25,game.zoom*50,game.zoom*50,game.zoom,game);
     }
 
+    public static void saveGame(string filename, TIM.main game){
+        game.saveEntities(filename);
+    }
+
     //create a new game Entity
     public void newEntity(string input,TIM.main game){
         string[] inp = input.Split(",");

@@ -13,7 +13,7 @@ public class Ore{
     public void getHit(int damage){
         durability -= damage;
         if(durability<=0){
-           isDestroyed = true;          
+           isDestroyed = true;
         }
     }
 

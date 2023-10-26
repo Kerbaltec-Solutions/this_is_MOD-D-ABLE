@@ -16,6 +16,7 @@ public class Worker :Creature{
 
     public override void step(TIM.main game)
     {
+        base.step(game);
         move();
         checkAttack(game);
     }

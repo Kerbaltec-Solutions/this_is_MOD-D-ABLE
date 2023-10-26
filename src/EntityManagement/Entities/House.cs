@@ -94,6 +94,7 @@ public class House{
                         entity.fType.GetMethod("autoSetup")!.Invoke(entity.fObject, new object[]{this.position,game});
                         game.entities.Add(name,entity);
                         subtractMaterials(entityClass);
+                        game.sys.displayMap(game);
                     }
                 }catch (ArgumentException){
                     Console.WriteLine("INF: Entity '{0}' already exists.",name);

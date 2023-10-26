@@ -106,6 +106,7 @@ public abstract class Creature{
         healthPoints -= damage;
         if(healthPoints <= 0){
             isDead = true;
+            
         }
     }
 
@@ -128,6 +129,7 @@ public abstract class Creature{
     // print health points and maximal health points
     public void printHP(TIM.main game){
         Console.WriteLine("HP: {0} | maxHp: {1}",healthPoints, maxHealthPoints);
+        Console.WriteLine("Is dead? {0}",isDead);
     }
 
     //set a target
