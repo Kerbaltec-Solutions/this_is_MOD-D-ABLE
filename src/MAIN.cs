@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "1.0.1-dev"; //public variable for the versioning info
+    public static string version {get;} = "1.0.3-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -43,12 +43,19 @@ public class TIM{
             game=g;
             gameMap.createTerrain();    //create Map
             SpawnEntities spawner = new SpawnEntities();
-            spawner.spawnentities("Deer",game);
-            spawner.spawnentities("Bear",game);
-            spawner.spawnOre(game);
             entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
             entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
             methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
+            spawner.spawnentities("Deer",game);
+            spawner.spawnentities("Bear",game);
+            spawner.spawnOre(game);
+            Console.Write("Name your first Worker: ");
+            string firstWorker = null;
+            while(firstWorker==null){
+                firstWorker = Console.ReadLine();
+            }
+            entities.Add(firstWorker,new functionProperties("Worker"));
+            methods.callMethod(firstWorker, "setup", center_pos.X.ToString()+","+center_pos.Y.ToString(), game);
             InpH.Start();   //start the input handler
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open

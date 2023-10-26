@@ -1,14 +1,8 @@
 using RoutePlanning;
-public abstract class Creature{
-
-    protected TIM.main game = null!; // reference go game
+public abstract class Creature:Entity{
     public bool draw{get;} = true; //if the entity should be drawn on the map
     public bool iterate{get;} = true;  //if the entity has actions to perform every frame
-    public abstract  bool createByPlayer{get;}    //can the entity be created by the player directly
     
-    public abstract bool controlledByPlayer{get;} // can the player controll the entity
-    public abstract char mapChar{get;}     //character which will represent the entity on the map
-    public abstract int mapColor{get;}  //color in which the entity will be drawn on the map
     protected abstract float speed{get;} //movement speed of the entity in fields per second
 
     protected bool isDead{get;set;} = false; 
@@ -16,28 +10,12 @@ public abstract class Creature{
     protected abstract  int maxHealthPoints {get;}
     protected abstract int healthPoints{get;set;}
 
-
-    public Position position{get;set;} = null!;  //current position of the entity
     protected Position? target = null;    //target position 
     protected Route? route = null;   // currently assigned route
     protected functionProperties? tgtEntity = null; // target entity
     protected bool trackEntity = false; // is currently following entity
     protected float timeSinceLastMove = TIM.main.STEPTIME; // in seconds
     
-
-    //setup function, set position ect.
-    public virtual void setup(string input, TIM.main game){
-        this.game = game;
-        this.position= new Position(Math.Min(int.Parse(input.Split(",")[0]),game.mapsize.X),Math.Min(int.Parse(input.Split(",")[1]),game.mapsize.Y));
-        this.route = null;
-    }
-
-    // setup for spawning entities at start of game
-    public virtual void autoSetup(Position pos, TIM.main game){
-        this.game = game;
-        this.position = pos;
-    }
-
     //frame actions
     public virtual void step(TIM.main game){
         if(isDead){
@@ -111,11 +89,6 @@ public abstract class Creature{
     }
 
     // functions for player
-
-     // prints coordinates of position
-    public void printPosition(TIM.main game){
-        Console.WriteLine("{0}",position);
-    }
 
     // prints current route
     public void printRoute(TIM.main game){

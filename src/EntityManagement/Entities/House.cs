@@ -1,16 +1,15 @@
 // entity that can be build by player, that is able to spawn entities that are controlled by the player
-public class House{
-    private TIM.main game = null!;
-    public bool createByPlayer{get;} = true;
+public class House:Entity{
+    
+    public override bool createByPlayer{get;} = false;
     public bool isHouse{get;} = true;
     public  bool draw{get;} = true;
-    public  char mapChar{get;}  = 'H';
-    public  int mapColor{get;} = 4;
-    public Position position{get;set;} = null!;
+    public override char mapChar{get;}  = 'H';
+    public override int mapColor{get;} = 4;
+    public override bool controlledByPlayer{get;} = true; // can the player controll the entity
 
-    public void setup(string input, TIM.main g){
-        game=g;
-        this.position= new Position(Math.Min(int.Parse(input.Split(",")[0]),game.mapsize.X),Math.Min(int.Parse(input.Split(",")[1]),game.mapsize.Y));
+    public override void setup(string input, TIM.main g){
+        base.setup(input, g);
         if(!game.gameMap.mapArray[position.X,position.Y].resource.IsWalkable){
             throw new NotSupportedException("Position not valid");
         }

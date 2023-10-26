@@ -24,12 +24,7 @@ The "c" entity of type "cursor" is also created as soon as you start the game to
     c:fP()      move the cursor to the center position of the map
     c:lE()      list all entities from the cursor radially outward
 
-First, you should use sys:nE(House, ... ) to create a new house. A house is the place where your first workers and fighters will be trained.
-
-The "House" class has only one command:
-    :nE(class, name)    create a new entitiy of the class. It will spawn at the position of the house.
-
-This house you can then use to train a new worker [house]:nE(Worker, ... )
+A single Worker will be created when you sstart the Game.
 
 The "Worker" class has the following commands:
 
@@ -38,11 +33,20 @@ The "Worker" class has the following commands:
     :GoToEntity(entitiy name)       follow a specific entity
     :printPosition()    show the current position
     :printHP()  print how many hitpoints the worker has left
+    :nE(class, name)    create a new entitiy of the class. It will spawn at the position of the worker.
 
-After you sent your first worker to work to get money, you will want to ensure the food supply. 
-A good first option is a Sword Fighter. Create one in the house [house]:nE(SwordFighter, ... )
+First, use [Worker]:GoTo() to ffind a nice spot for your first house, then use [Worker]:nE(House, ... ) to create a new house. A house is the place, where your workers and fighters will be trained.
 
-The "SwordFighter" and the "BowFighter" class have the following commands:
+The "House" class has only one command:
+    :nE(class, name)    create a new entitiy of the class. It will spawn at the position of the house.
+
+This house you can then use to train a new sword fighter [house]:nE(SwordFighter, ... ). 
+You will see, that you do not have enough resources to do so. 
+Using sys:printRes() will show you, that you do not have any money. But training a Sword Fighter costs 2 Money.
+
+So, use [Worker]:mine() to mine some Ore and get some money. One ore should be sufficient for training the first Fighter.
+
+The "SwordFighter" and the "BowFighter" classes have the following commands:
 
     :hunt()     hunt down the nearest wildlife for food
     :GoTo(target X, target Y)       go directly to a target

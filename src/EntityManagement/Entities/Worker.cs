@@ -129,5 +129,71 @@ public class Worker :Creature{
     public void mine(TIM.main game){
         mineNearestOre(game);
     }
+
+    private int checkMaterials(string entityClass){
+        switch(entityClass){
+            case "House":{
+                if(game.materials.Money >= 4){
+                    return 1;
+                }else{return 0;}
+            }
+            default: return -1;
+        }
+    }
+
+    private void subtractMaterials(string entityClass){
+        switch(entityClass){
+            case "House":{            
+                game.materials.Money-= 4;
+                break;
+            }
+            default: return;
+        }
+    }
+
+    public void spawnEntity(string input,TIM.main game){
+        string[] inp = input.Split(",");
+        try{
+            new functionProperties(inp[0]);
+        }catch(NotImplementedException){
+            return;
+        }
+        string entityClass;
+        string name;
+        try{
+            entityClass = inp[0];
+            name = inp[1];
+        }catch(IndexOutOfRangeException){
+            Console.WriteLine("Wrong Syntax: spawnEntity(entityClass,name)");
+            return;
+        }
+        
+        functionProperties entity=new functionProperties(entityClass);
+        switch(checkMaterials(entityClass)){
+            case 0:{
+                Console.WriteLine("Not enough resources");
+                return;
+            }case -1:{
+                Console.WriteLine("{0} can not be created here.", entityClass);
+                return;
+            }
+            default:{
+                try{
+                    if(entity.fType.GetMethod("autoSetup") is not null){
+                        entity.fType.GetMethod("autoSetup")!.Invoke(entity.fObject, new object[]{this.position,game});
+                        game.entities.Add(name,entity);
+                        subtractMaterials(entityClass);
+                        game.sys.displayMap(game);
+                    }
+                }catch (ArgumentException){
+                    Console.WriteLine("INF: Entity '{0}' already exists.",name);
+                }
+                return;
+            }
+        }  
+    }
+    public void nE(string input,TIM.main g){
+        spawnEntity(input,game);
+    }
 }
 
