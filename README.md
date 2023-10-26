@@ -31,13 +31,26 @@ In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend its
 ## Useage: 
 
 - Download the version, you would like to use.
-- open the console
-- Navigate inside the folder "this_is_MOD-D-ABLE"
-- ensure, you have .NET 6.0 installed
-- on first run, first use "dotnet add Package Accord" to install neccesarry Libraries
-- start the program by typing "dotnet run"
-- press ENTER to switch in and out of the command input mode.
-- in the input mode, type sys:help() to view a list of available commands.
+- normal installation mode (only available for Linux):
+  - ensure, you have .NET 6.X installed
+  - open the "this_is_MOD-D-ABLE" folder in your file explorer
+  - for first installation:
+    - right click on "setup.sh"
+    - navigate to "properties/Permissions"
+    - check "Allow executing file as program"
+    - close the Properties menu and right click on setup.sh again
+    - click "Run as a Program"
+  -starting the game after installation:
+    - right click on "start.sh"
+    - click "Run as a Program"
+- manual installation and running
+  - open the console
+  - Navigate inside the folder "this_is_MOD-D-ABLE"
+  - ensure, you have .NET 6.0 installed
+  - on first run, first use "dotnet add Package Accord" to install neccesarry Libraries
+  - start the program by typing "dotnet run"
+  - press ENTER to switch in and out of the command input mode.
+  - in the input mode, type sys:help() to view a list of available commands.
 
 ## Vorläufiges Dateizusammenhangsdiagramm
 <!--

@@ -1,4 +1,5 @@
 public abstract class Fighter :Creature{
+    public bool isTarget{get;} = true; // creature is target for enemies
     protected abstract int damage{get;} // damage the fighter deals per hit
     protected abstract int hitRange{get;} // maximal distance to target in which fighter can deal damage
 

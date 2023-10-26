@@ -1,5 +1,6 @@
 using RoutePlanning;
 public class Worker :Creature{
+    public bool isTarget{get;} = true; // creature is target for enemies
     public override  bool createByPlayer{get;} = false;
     public override bool controlledByPlayer{get;} = true;
     public override char mapChar{get;} = 'W';

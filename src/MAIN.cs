@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "1.0.3-dev"; //public variable for the versioning info
+    public static string version {get;} = "1.0.4-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -26,6 +26,8 @@ public class TIM{
         public Thread InpH{get; set;}   //Input handler
 
         public const float STEPTIME = (float)1; //time intervals between steps in seconds
+
+        private int respawn_timer = 0;  //timer for respawning entities
         
         public main(){
             //parameter initialisation
@@ -46,11 +48,8 @@ public class TIM{
             entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
             entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
             methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
-            spawner.spawnentities("Deer",game);
-            spawner.spawnentities("Bear",game);
-            spawner.spawnOre(game);
             Console.Write("Name your first Worker: ");
-            string firstWorker = null;
+            string? firstWorker = null;
             while(firstWorker==null){
                 firstWorker = Console.ReadLine();
             }
@@ -69,6 +68,15 @@ public class TIM{
                         methods.callMethod(input,game); //try to call methods accordingly
                     }
                 }else{
+                    if(respawn_timer==0){   //when timer runs out respawn entities and set new timer
+                        spawner.spawnentities("Deer",game);
+                        spawner.spawnentities("Bear",game);
+                        spawner.spawnOre(game);
+                        System.Random rand = new System.Random();
+                        respawn_timer = rand.Next(20,101);
+                    }else{
+                        respawn_timer--;
+                    }
                     foreach(KeyValuePair<string, functionProperties> entry in entities){    //iterate through all game entities
                         functionProperties entity = entry.Value;
                         var itVar= entity.fType.GetProperty("iterate");
