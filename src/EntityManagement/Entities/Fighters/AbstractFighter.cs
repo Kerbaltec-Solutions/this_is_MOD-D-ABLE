@@ -72,7 +72,6 @@ public abstract class Fighter :Creature{
             Console.WriteLine("No Wildlife in range.");
         }
     }
-    
     public void hunt(TIM.main game){
         targetNearestWildlife(game);
     }

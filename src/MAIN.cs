@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "1.0.5-dev"; //public variable for the versioning info
+    public static string version {get;} = "1.0.6-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -64,7 +64,7 @@ public class TIM{
                         spawner.spawnentities("Bear",game);
                         spawner.spawnOre(game);
                         System.Random rand = new System.Random();
-                        respawn_timer = rand.Next(20,101);
+                        respawn_timer = rand.Next(50,201);
                     }else{
                         respawn_timer--;
                     }

@@ -118,10 +118,10 @@ public abstract class Creature:Entity{
     }
 
     // set new targetEntity
-    public void GoToEntity(string input, TIM.main game){
+    public void GoToE(string input, TIM.main game){
         // try to find entity
         try{
-             if(controlledByPlayer){ 
+            if(controlledByPlayer){ 
                 functionProperties entity = game.entities[input];
                 var boolVar= entity.fType.GetProperty("draw");
                 if(boolVar!=null){

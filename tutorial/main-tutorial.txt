@@ -30,7 +30,7 @@ The "Worker" class has the following commands:
 
     :mine()     mine the nearest Ore for money
     :GoTo(target X, target Y)       go directly to a target
-    :GoToEntity(entitiy name)       follow a specific entity
+    :GoToE(entitiy name)       follow a specific entity
     :printPosition()    show the current position
     :printHP()  print how many hitpoints the worker has left
     :nE(class, name)    create a new entitiy of the class. It will spawn at the position of the worker.
@@ -50,7 +50,7 @@ The "SwordFighter" and the "BowFighter" classes have the following commands:
 
     :hunt()     hunt down the nearest wildlife for food
     :GoTo(target X, target Y)       go directly to a target
-    :GoToEntity(entitiy name)       hunt a specific entity
+    :GoToE(entitiy name)       hunt a specific entity
     :printPosition()    show the current position
     :printHP()  print how many hitpoints the fighter has left
 
