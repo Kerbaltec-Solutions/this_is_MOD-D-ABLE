@@ -14,6 +14,8 @@ The "sys" entity of type "system" is added as soon as you start the game and hel
     sys:setZoom(Zoomlevel)      set the Zoomlevel for the map. The Zoomlevel should be between 1 and 3.
     sys:setPosition(position X, position Y)         set the center position for the map.
     sys:printRes()  show how many resources (food and money) you have.
+    sys:saveMap(savename)   save the map as "savename" (does not save entities)
+    sys:loadMap(savename)   load the map named "savename"
 
 The "c" entity of type "cursor" is also created as soon as you start the game to help you navigate the map.
 
