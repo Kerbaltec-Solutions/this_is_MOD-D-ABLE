@@ -61,4 +61,19 @@ public class SpawnEntities{
             }
         }
     }
+
+    public void initialspawn(TIM.main game){
+        game.entities = new Dictionary<string,functionProperties>();
+        game.entities.Add("sys",new functionProperties());
+        game.entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
+        methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
+        Console.Write("Name your first Worker: ");
+        string? firstWorker = null;
+        while(firstWorker==null){
+            firstWorker = Console.ReadLine();
+        }
+        game.entities.Add(firstWorker,new functionProperties("Worker"));
+        methods.callMethod(firstWorker, "setup", game.center_pos.X.ToString()+","+game.center_pos.Y.ToString(), game);
+        game.respawn_timer = 0;
+    }
 }

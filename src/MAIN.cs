@@ -27,7 +27,7 @@ public class TIM{
 
         public const float STEPTIME = (float)1; //time intervals between steps in seconds
 
-        private int respawn_timer = 0;  //timer for respawning entities
+        public int respawn_timer {get; set;} = 0;  //timer for respawning entities
         
         public main(){
             //parameter initialisation
@@ -45,16 +45,7 @@ public class TIM{
             game=g;
             gameMap.createTerrain();    //create Map
             SpawnEntities spawner = new SpawnEntities();
-            entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
-            entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
-            methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
-            Console.Write("Name your first Worker: ");
-            string? firstWorker = null;
-            while(firstWorker==null){
-                firstWorker = Console.ReadLine();
-            }
-            entities.Add(firstWorker,new functionProperties("Worker"));
-            methods.callMethod(firstWorker, "setup", center_pos.X.ToString()+","+center_pos.Y.ToString(), game);
+            spawner.initialspawn(game);
             InpH.Start();   //start the input handler
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open

@@ -12,9 +12,9 @@ public class system{
 
     //create a completely new map
     public static void newMap(TIM.main game){
-        game.entities = new Dictionary<string,functionProperties>();
         game.gameMap.createTerrain();
-        game.entities.Add("sys",new functionProperties());
+        SpawnEntities spawner = new SpawnEntities();
+        spawner.initialspawn(game);
     }
 
     //print the map pixel's properties in text form
@@ -28,6 +28,8 @@ public class system{
 
     public static void loadMap(string filename, TIM.main game){
         game.gameMap.load(filename);
+        SpawnEntities spawner = new SpawnEntities();
+        spawner.initialspawn(game);
     }
 
     //display the map 
