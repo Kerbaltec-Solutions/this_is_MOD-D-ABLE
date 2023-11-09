@@ -21,7 +21,7 @@ import: https://github.com/liascript/CodeRunner
 
 In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend itself against wild animals, collect food and resources and grow to new sizes. Game entities can be flexibly added and edited by the player to adapt the game to their own playstyle. "This is MOD(D)ABLE" is played in the console by representing the map using console colors and ASCII characters, and control is done via text commands such as "fighter1:target(X,Y)". The game should be compiled locally to ensure maximum editability.
 
--- Hier folgt bald ein Teaser-Video --
+!?[Teaser](https://youtu.be/KSM9npYXOmA?si=7c-HhC6Mh-OfnPDE)
 
 ## Downloads:
 
