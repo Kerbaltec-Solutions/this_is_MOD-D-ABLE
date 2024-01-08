@@ -67,6 +67,9 @@ public class SpawnEntities{
         game.entities.Add("sys",new functionProperties());
         game.entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
         methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
+        game.entities.Add("mat_std",new functionProperties("PlayerMaterials"));
+        int[] res={4,4};
+        methods.callMethod("mat_std","SetMaterials",res,game);
         Console.Write("Name your first Worker: ");
         string? firstWorker = null;
         while(firstWorker==null){

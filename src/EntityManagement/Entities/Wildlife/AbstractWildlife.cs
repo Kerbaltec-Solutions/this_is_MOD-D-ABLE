@@ -6,7 +6,7 @@ public abstract class Wildlife: Creature{
     protected  Position Spawnpoint = null!; 
     protected abstract int territoryRange{get;} // radius of territory (around spawnpoint)
 
-    public abstract int food {get;}
+    public abstract int[] mat {get;}
 
     public override void autoSetup(Position pos, TIM.main game){
         this.game = game;
@@ -19,7 +19,7 @@ public abstract class Wildlife: Creature{
             initIdleMovement(game);
         }
         if(isDead){
-            game.materials.Food += food;
+            methods.callMethod("mat_std","IncMaterials",mat,game);
         }
         base.step(game);
     }

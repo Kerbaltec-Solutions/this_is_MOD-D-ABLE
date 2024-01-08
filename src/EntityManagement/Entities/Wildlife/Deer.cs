@@ -7,6 +7,6 @@ public class Deer: Wildlife{
     protected override float speed{get;} = 7; // in fields per second
     protected override int territoryRange{get;} = 10;
 
-    public override int food{get;} = 2;
+    public override int[] mat{get;} = {2,0};
 
 }

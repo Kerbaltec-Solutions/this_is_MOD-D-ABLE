@@ -21,44 +21,35 @@ public class House:Entity{
     private int checkMaterials(string entityClass){
         switch(entityClass){
             case "Worker":{
-                if(game.materials.Food >= 2){
-                    return 1;
-                }else{return 0;}
+                try{
+                    int[] mat ={-2,0};
+                    methods.callMethod("mat_std","IncMaterialsSave",mat,game);
+                }catch(System.ArgumentOutOfRangeException){
+                    return 0;
+                }
+                return 1;
             }
             case "SwordFighter":{
-                if(game.materials.Food >= 2 && game.materials.Money >= 2){
-                    return 1;
-                }else{return 0;}
+                try{
+                    int[] mat ={-2,-2};
+                    methods.callMethod("mat_std","IncMaterialsSave",mat,game);
+                }catch(System.ArgumentOutOfRangeException){
+                    return 0;
+                }
+                return 1;
             }
             case "BowFighter":{
-                if(game.materials.Food >= 2 && game.materials.Money >= 4){
-                    return 1;
-                }else{return 0;}
+                try{
+                    int[] mat ={-2,-4};
+                    methods.callMethod("mat_std","IncMaterialsSave",mat,game);
+                }catch(System.ArgumentOutOfRangeException){
+                    return 0;
+                }
+                return 1;
             }
             default: return -1;
         }
     }
-
-    private void subtractMaterials(string entityClass){
-        switch(entityClass){
-            case "Worker":{            
-                game.materials.Food-= 2;
-                break;
-            }
-            case "SwordFighter":{
-                game.materials.Food -= 2;
-                game.materials.Money -= 2;
-                break;
-            }
-            case "BowFighter":{
-                game.materials.Food-= 2;
-                game.materials.Money -= 4;
-                break;
-            }
-            default: return;
-        }
-    }
-
 
     // function that spawns an entity, can be called by player
     public void spawnEntity(string input,TIM.main game){
@@ -81,7 +72,6 @@ public class House:Entity{
         functionProperties entity=new functionProperties(entityClass);
         switch(checkMaterials(entityClass)){
             case 0:{
-                Console.WriteLine("Not enough resources");
                 return;
             }case -1:{
                 Console.WriteLine("{0} can not be created here.", entityClass);
@@ -92,7 +82,6 @@ public class House:Entity{
                     if(entity.fType.GetMethod("autoSetup") is not null){
                         entity.fType.GetMethod("autoSetup")!.Invoke(entity.fObject, new object[]{this.position,game});
                         game.entities.Add(name,entity);
-                        subtractMaterials(entityClass);
                         game.sys.displayMap(game);
                     }
                 }catch (ArgumentException){

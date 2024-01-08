@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "1.0.6-dev"; //public variable for the versioning info
+    public static string version {get;} = "1.0.7-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -19,7 +19,6 @@ public class TIM{
         public int zoom {get; set;} //zoom level
         public Position center_pos {get; set;}  //center position of the camera
         public Position mapsize {get;} = new Position(100,100); //size of the game map
-        public PlayerMaterials materials{get;set;}
 
         public main? game{get; private set;}    //the game itself
         public bool input_interrupt{get; set;}  //boolean, if true, the imput mode is opened
@@ -32,7 +31,6 @@ public class TIM{
         public main(){
             //parameter initialisation
             gameMap=new map(mapsize.X,mapsize.Y);
-            materials = new PlayerMaterials(4,4);
             exit = false;
             entities = new Dictionary<string,functionProperties>();
             zoom=1;

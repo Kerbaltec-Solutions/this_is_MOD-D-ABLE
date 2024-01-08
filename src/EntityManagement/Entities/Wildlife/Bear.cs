@@ -7,7 +7,7 @@ public class Bear: Wildlife{
     protected override float speed{get;} = 7; // in fields per second
     protected override int territoryRange{get;} = 10;
 
-    public override int food{get;} = 4;
+    public override int[] mat{get;} = {4,0};
 
     protected int maxDistanceToSpawn {get{return 3* territoryRange;}} // maximal distance the entity can have to spawn
 

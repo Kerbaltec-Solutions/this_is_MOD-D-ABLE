@@ -134,21 +134,15 @@ public class Worker :Creature{
     private int checkMaterials(string entityClass){
         switch(entityClass){
             case "House":{
-                if(game.materials.Money >= 4){
-                    return 1;
-                }else{return 0;}
+                try{
+                    int[] mat ={0,-4};
+                    methods.callMethod("mat_std","IncMaterialsSave",mat,game);
+                }catch(System.ArgumentOutOfRangeException){
+                    return 0;
+                }
+                return 1;
             }
             default: return -1;
-        }
-    }
-
-    private void subtractMaterials(string entityClass){
-        switch(entityClass){
-            case "House":{            
-                game.materials.Money-= 4;
-                break;
-            }
-            default: return;
         }
     }
 
@@ -172,7 +166,6 @@ public class Worker :Creature{
         functionProperties entity=new functionProperties(entityClass);
         switch(checkMaterials(entityClass)){
             case 0:{
-                Console.WriteLine("Not enough resources");
                 return;
             }case -1:{
                 Console.WriteLine("{0} can not be created here.", entityClass);
@@ -183,7 +176,6 @@ public class Worker :Creature{
                     if(entity.fType.GetMethod("autoSetup") is not null){
                         entity.fType.GetMethod("autoSetup")!.Invoke(entity.fObject, new object[]{this.position,game});
                         game.entities.Add(name,entity);
-                        subtractMaterials(entityClass);
                         game.sys.displayMap(game);
                     }
                 }catch (ArgumentException){

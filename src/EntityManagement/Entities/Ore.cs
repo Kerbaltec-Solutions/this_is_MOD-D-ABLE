@@ -6,7 +6,7 @@ public class Ore{
     public  int mapColor{get;} = 15;
     public bool isDestroyed = false;
     public Position position{get;set;} = null!;
-    public int money{get;} = 2;
+    public int[] mat ={0,2};
 
     public int durability{get;set;} = 3; // number of hits until destroyed
 
@@ -19,7 +19,7 @@ public class Ore{
 
     public void step(TIM.main game){
         if(isDestroyed){
-            game.materials.Money += money; 
+            methods.callMethod("mat_std","IncMaterials",mat,game);
             throw new NotSupportedException("Ore was destroyed");
         }
     }

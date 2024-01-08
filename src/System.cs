@@ -137,15 +137,8 @@ public class system{
         }
     }
 
-    public void printFood(TIM.main game){
-        Console.WriteLine("Food: {0}", game.materials.Food);
-    }
-    public void printMoney(TIM.main game){
-        Console.WriteLine("Money: {0}", game.materials.Money);
-    }
     public void printRes(TIM.main game){
-        printFood(game);
-        printMoney(game);
+        methods.callMethod("mat_std","PrintMaterials",game);
     }
     //print the tutorial to the console
     public void help(TIM.main game){
