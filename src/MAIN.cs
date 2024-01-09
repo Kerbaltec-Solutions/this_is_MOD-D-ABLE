@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "1.0.0-nightly"; //public variable for the versioning info
+    public static string version {get;} = "1.1.0-nightly"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
@@ -19,18 +19,18 @@ public class TIM{
         public int zoom {get; set;} //zoom level
         public Position center_pos {get; set;}  //center position of the camera
         public Position mapsize {get;} = new Position(100,100); //size of the game map
-        public PlayerMaterials materials{get;set;}
 
         public main? game{get; private set;}    //the game itself
         public bool input_interrupt{get; set;}  //boolean, if true, the imput mode is opened
         public Thread InpH{get; set;}   //Input handler
 
         public const float STEPTIME = (float)1; //time intervals between steps in seconds
+
+        public int respawn_timer {get; set;} = 0;  //timer for respawning entities
         
         public main(){
             //parameter initialisation
             gameMap=new map(mapsize.X,mapsize.Y);
-            materials = new PlayerMaterials(4,4);
             exit = false;
             entities = new Dictionary<string,functionProperties>();
             zoom=1;
@@ -43,12 +43,7 @@ public class TIM{
             game=g;
             gameMap.createTerrain();    //create Map
             SpawnEntities spawner = new SpawnEntities();
-            spawner.spawnentities("Deer",game);
-            spawner.spawnentities("Bear",game);
-            spawner.spawnOre(game);
-            entities.Add("sys",new functionProperties());   //add system entity, the basic control entity of the game
-            entities.Add("c",new functionProperties("cursor")); //add a cursor entity as a helping tool for the player
-            methods.callMethod("c","fP",game);  //let the cursor find the center position of the camera
+            spawner.initialspawn(game);
             InpH.Start();   //start the input handler
             while(!exit){   //play the game until it is stopped
                 if(input_interrupt){    //if the input mode is open
@@ -62,6 +57,15 @@ public class TIM{
                         methods.callMethod(input,game); //try to call methods accordingly
                     }
                 }else{
+                    if(respawn_timer==0){   //when timer runs out respawn entities and set new timer
+                        spawner.spawnentities("Deer",game);
+                        spawner.spawnentities("Bear",game);
+                        spawner.spawnOre(game);
+                        System.Random rand = new System.Random();
+                        respawn_timer = rand.Next(50,201);
+                    }else{
+                        respawn_timer--;
+                    }
                     foreach(KeyValuePair<string, functionProperties> entry in entities){    //iterate through all game entities
                         functionProperties entity = entry.Value;
                         var itVar= entity.fType.GetProperty("iterate");

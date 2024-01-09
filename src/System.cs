@@ -12,14 +12,24 @@ public class system{
 
     //create a completely new map
     public static void newMap(TIM.main game){
-        game.entities = new Dictionary<string,functionProperties>();
         game.gameMap.createTerrain();
-        game.entities.Add("sys",new functionProperties());
+        SpawnEntities spawner = new SpawnEntities();
+        spawner.initialspawn(game);
     }
 
     //print the map pixel's properties in text form
     public static void printMap(TIM.main game){
         game.gameMap.print();
+    }
+
+    public static void saveMap(string filename, TIM.main game){
+        game.gameMap.save(filename);
+    }
+
+    public static void loadMap(string filename, TIM.main game){
+        game.gameMap.load(filename);
+        SpawnEntities spawner = new SpawnEntities();
+        spawner.initialspawn(game);
     }
 
     //display the map 
@@ -127,15 +137,8 @@ public class system{
         }
     }
 
-    public void printFood(TIM.main game){
-        Console.WriteLine("Food: {0}", game.materials.Food);
-    }
-    public void printMoney(TIM.main game){
-        Console.WriteLine("Money: {0}", game.materials.Money);
-    }
     public void printRes(TIM.main game){
-        printFood(game);
-        printMoney(game);
+        methods.callMethod("mat_std","PrintMaterials",game);
     }
     //print the tutorial to the console
     public void help(TIM.main game){

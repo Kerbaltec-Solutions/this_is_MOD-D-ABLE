@@ -57,9 +57,62 @@ public class map{
 
     //print all values of all pixels to the console
     public void print(){
+        Console.WriteLine("{0},{1}",sizeX,sizeY);
         foreach(mapPixel pixel in mapArray){
             pixel.print();
         }
+    }
+
+    public void save(string filename){
+        BinaryWriter bw;
+         
+        //create the file
+        try {
+            bw = new BinaryWriter(new FileStream(filename, FileMode.Create));
+        } catch (IOException e) {
+            Console.WriteLine(e.Message + "\n Cannot create file.");
+            return;
+        }
+        
+        //writing into the file
+        try {
+            bw.Write((byte)sizeX);
+            bw.Write((byte)sizeY);
+            foreach(mapPixel pixel in mapArray){
+                bw.Write((byte)pixel.color);
+            }
+        } catch (IOException e) {
+            Console.WriteLine(e.Message + "\n Cannot write to file.");
+            return;
+        }
+        bw.Close();
+        Console.WriteLine("Map saved to "+filename);
+    }
+
+    public void load(string filename){
+        BinaryReader br;
+         
+        try {
+            br = new BinaryReader(new FileStream(filename, FileMode.Open));
+        } catch (IOException e) {
+            Console.WriteLine(e.Message + "\n Cannot open file.");
+            return;
+        }
+         
+        try {
+            sizeX = br.ReadByte();
+            sizeY = br.ReadByte();
+            foreach(mapPixel pixel in mapArray){
+                
+                pixel.resource = new Resource((Resource.ResourceType)br.ReadByte());
+                pixel.color = pixel.resource.getColor();
+            }
+        } catch (IOException e) {
+            Console.WriteLine(e.Message + "\n Cannot read from file.");
+            return;
+        }
+        br.Close();
+        Console.WriteLine("Map loaded from "+filename);
     }
 
     //display the map (and entities in the map)
@@ -298,7 +351,7 @@ public class mapPixel{
 
     //print the values of the Pixel to the console
     public void print(){
-        string output=color.ToString();
+        string output=resource.ToString();
         Console.WriteLine(output);
     }
 }
