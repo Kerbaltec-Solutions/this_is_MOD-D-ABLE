@@ -1,4 +1,6 @@
 using RoutePlanning;
+using System;
+using System.Reflection;
 public class Worker :Creature{
     public bool isTarget{get;} = true; // creature is target for enemies
     public override  bool createByPlayer{get;} = false;
@@ -137,7 +139,7 @@ public class Worker :Creature{
                 try{
                     int[] mat ={0,-4};
                     methods.callMethod("mat_std","IncMaterialsSave",mat,game);
-                }catch(System.ArgumentOutOfRangeException){
+                }catch(System.Reflection.TargetInvocationException){
                     return 0;
                 }
                 return 1;
@@ -166,6 +168,7 @@ public class Worker :Creature{
         functionProperties entity=new functionProperties(entityClass);
         switch(checkMaterials(entityClass)){
             case 0:{
+                Console.WriteLine("Could not create entity.");
                 return;
             }case -1:{
                 Console.WriteLine("{0} can not be created here.", entityClass);
