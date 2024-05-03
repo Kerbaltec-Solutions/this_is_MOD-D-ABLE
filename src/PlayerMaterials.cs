@@ -22,12 +22,12 @@ public class PlayerMaterials{
 
         if(Food<0){
             Console.WriteLine("Food too low!");
-            Food+=input[0];
+            Food-=input[0];
             throw new System.ArgumentOutOfRangeException("Food too low!");
         }
         if(Money<0){
             Console.WriteLine("Money too low!");
-            Money+=input[1];
+            Money-=input[1];
             throw new System.ArgumentOutOfRangeException("Money too low!");
         }
     }
