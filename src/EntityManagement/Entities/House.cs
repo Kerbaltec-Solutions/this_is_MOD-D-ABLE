@@ -24,7 +24,7 @@ public class House:Entity{
                 try{
                     int[] mat ={-2,0};
                     methods.callMethod("mat_std","IncMaterialsSave",mat,game);
-                }catch(System.ArgumentOutOfRangeException){
+                }catch(System.Reflection.TargetInvocationException){
                     return 0;
                 }
                 return 1;
@@ -33,7 +33,7 @@ public class House:Entity{
                 try{
                     int[] mat ={-2,-2};
                     methods.callMethod("mat_std","IncMaterialsSave",mat,game);
-                }catch(System.ArgumentOutOfRangeException){
+                }catch(System.Reflection.TargetInvocationException){
                     return 0;
                 }
                 return 1;
@@ -42,7 +42,7 @@ public class House:Entity{
                 try{
                     int[] mat ={-2,-4};
                     methods.callMethod("mat_std","IncMaterialsSave",mat,game);
-                }catch(System.ArgumentOutOfRangeException){
+                }catch(System.Reflection.TargetInvocationException){
                     return 0;
                 }
                 return 1;

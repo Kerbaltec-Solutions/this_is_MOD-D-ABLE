@@ -137,7 +137,7 @@ public class Worker :Creature{
                 try{
                     int[] mat ={0,-4};
                     methods.callMethod("mat_std","IncMaterialsSave",mat,game);
-                }catch(System.ArgumentOutOfRangeException){
+                }catch(System.Reflection.TargetInvocationException){
                     return 0;
                 }
                 return 1;
