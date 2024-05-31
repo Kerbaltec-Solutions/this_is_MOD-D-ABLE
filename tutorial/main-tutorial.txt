@@ -1,0 +1,66 @@
+Welcome to this is MOD(D)ABLE.
+
+In this game you will be a ble to control your own little tribe and help them to thrive and exploit the resources of the little pixelated world they live in.
+The game consists of many different entities of diffenent classes. 
+Classes have functions of which some can be used by the player to control them or the game as a whole.
+So, let us see, how you can control all entities of the game.
+
+The "sys" entity of type "system" is added as soon as you start the game and helps you control the basic structure.
+
+    sys:help()      display this text again in the Console
+    sys:nE(class, name, position X, position Y)     create a new Entitiy at a specified position the name can be coosen freely
+    sys:newMap()    start a new game
+    sys:exit()      exit the game
+    sys:setZoom(Zoomlevel)      set the Zoomlevel for the map. The Zoomlevel should be between 1 and 3.
+    sys:setPosition(position X, position Y)         set the center position for the map.
+    sys:printRes()  show how many resources (food and money) you have.
+    sys:saveMap(savename)   save the map as "savename" (does not save entities)
+    sys:loadMap(savename)   load the map named "savename"
+
+The "c" entity of type "cursor" is also created as soon as you start the game to help you navigate the map.
+
+    c:sP(position X, position Y)    move the cursor to a specified position
+    c:gP()      show the current position of the cursor
+    c:fP()      move the cursor to the center position of the map
+    c:lE()      list all entities from the cursor radially outward
+
+A single Worker will be created when you sstart the Game.
+
+The "Worker" class has the following commands:
+
+    :mine()     mine the nearest Ore for money
+    :GoTo(target X, target Y)       go directly to a target
+    :GoToE(entitiy name)       follow a specific entity
+    :printPosition()    show the current position
+    :printHP()  print how many hitpoints the worker has left
+    :nE(class, name)    create a new entitiy of the class. It will spawn at the position of the worker.
+
+First, use [Worker]:GoTo() to ffind a nice spot for your first house, then use [Worker]:nE(House, ... ) to create a new house. A house is the place, where your workers and fighters will be trained.
+
+The "House" class has only one command:
+    :nE(class, name)    create a new entitiy of the class. It will spawn at the position of the house.
+
+This house you can then use to train a new sword fighter [house]:nE(SwordFighter, ... ). 
+You will see, that you do not have enough resources to do so. 
+Using sys:printRes() will show you, that you do not have any money. But training a Sword Fighter costs 2 Money.
+
+So, use [Worker]:mine() to mine some Ore and get some money. One ore should be sufficient for training the first Fighter.
+
+The "SwordFighter" and the "BowFighter" classes have the following commands:
+
+    :hunt()     hunt down the nearest wildlife for food
+    :GoTo(target X, target Y)       go directly to a target
+    :GoToE(entitiy name)       hunt a specific entity
+    :printPosition()    show the current position
+    :printHP()  print how many hitpoints the fighter has left
+
+So, with that out of the way. as soon as you close the input mode, you will see, that the game starts running again.
+You can use the "+" and "-" buttons to zoom the map and pan around using the arrow buttons.
+Also try using "w,a,s,d" to move the cursor around. You will see two kinds of wildlife. 
+
+"F" stands for Friendly Wildlife. You can hunt them and gather food. 
+But be aware of the "E", Enemy Wildlife. If you get too close, they will try to attack you.
+
+Also, see the "#" spawning inside mountains. These are Ores and give you money.
+
+So, you can get into the game now. Have fun.
