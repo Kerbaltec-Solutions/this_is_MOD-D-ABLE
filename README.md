@@ -13,7 +13,7 @@ import: https://github.com/liascript/CodeRunner
 
 -->
 
-[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/blob/master/README.md)
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/blob/main/README.md)
 
 ![logo](https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/assets/61379284/6656a1be-4630-4b50-94ab-39ce8dfa382c)
 
@@ -21,7 +21,7 @@ import: https://github.com/liascript/CodeRunner
 
 In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend itself against wild animals, collect food and resources and grow to new sizes. Game entities can be flexibly added and edited by the player to adapt the game to their own playstyle. "This is MOD(D)ABLE" is played in the console by representing the map using console colors and ASCII characters, and control is done via text commands such as "fighter1:target(X,Y)". The game should be compiled locally to ensure maximum editability.
 
--- Hier folgt bald ein Teaser-Video --
+!?[Teaser](https://youtu.be/KSM9npYXOmA?si=7c-HhC6Mh-OfnPDE)
 
 ## Downloads:
 
