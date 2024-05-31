@@ -13,7 +13,7 @@ import: https://github.com/liascript/CodeRunner
 
 -->
 
-[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/blob/master/README.md)
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/blob/main/README.md)
 
 ![logo](https://github.com/Kerbaltec-Solutions/this_is_MOD-D-ABLE/assets/61379284/6656a1be-4630-4b50-94ab-39ce8dfa382c)
 
@@ -21,7 +21,7 @@ import: https://github.com/liascript/CodeRunner
 
 In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend itself against wild animals, collect food and resources and grow to new sizes. Game entities can be flexibly added and edited by the player to adapt the game to their own playstyle. "This is MOD(D)ABLE" is played in the console by representing the map using console colors and ASCII characters, and control is done via text commands such as "fighter1:target(X,Y)". The game should be compiled locally to ensure maximum editability.
 
--- Hier folgt bald ein Teaser-Video --
+!?[Teaser](https://youtu.be/KSM9npYXOmA?si=7c-HhC6Mh-OfnPDE)
 
 ## Downloads:
 
@@ -31,25 +31,26 @@ In "This is MOD(D)ABLE" the player controls their own tribe, helps it defend its
 ## Useage: 
 
 - Download the version, you would like to use.
-- open the console
-- Navigate inside the folder "this_is_MOD-D-ABLE"
-- ensure, you have .NET 6.0 installed
-- on first run, first use "dotnet add Package Accord" to install neccesarry Libraries
-- start the program by typing "dotnet run"
-- press ENTER to switch in and out of the command input mode.
-- in the input mode, type sys:help() to view a list of available commands. (not yet implemented)
-
-## Zielsetzung
-
-- Das Ziel ist das erstellen eines Management/Survival-Spiels ähnlich AoE in C# unter berücksichtigung der Modifizierbarkeit durch Dritte in der Zukunft.
-- Die Software soll als Sourcecode verteilt werden und erst bei Ausführung lokal compiliert werden.
-- Mittels System.Reflexion soll das Programm selbstständig die Funktionen der Entitäten des Spiels aufrufen können.
-- Die Steuerung des Spiels erfolgt hauptsächlich über pseudo-funktionsaufrufe, die der Spieler in die Konsole eingibt.
-- Um die Konsole zu öffnen und, um den gezeigten Kartenausschnitt zu ändern soll ein asyncroner Input handler mittels System.Threading geschrieben werden.
-- Das Spiel soll in Takten die Eigenschaften sämmtlicher Entitäten bearbeiten und zwar über eine Funktion der Entität, die angibt, was geschehen soll.
-- Die Karte, mit Ressourcen, Hindernissen und Farben soll mittels Perlin noise aus der Bibliothek Accord zufällig erzeugt werden.
-- Entitäten, die auf der Karte gezeigt werden, sollen über einen einzelnen Charakter repräsentiert werden.
-- Die Karte soll mittels variation der Hintergrundfarbe in der Konsole gezeichnet werden.
+- normal installation mode (only available for Linux):
+  - ensure, you have .NET 6.X installed
+  - open the "this_is_MOD-D-ABLE" folder in your file explorer
+  - for first installation:
+    - right click on "setup.sh"
+    - navigate to "properties/Permissions"
+    - check "Allow executing file as program"
+    - close the Properties menu and right click on setup.sh again
+    - click "Run as a Program"
+  -starting the game after installation:
+    - right click on "start.sh"
+    - click "Run as a Program"
+- manual installation and running
+  - open the console
+  - Navigate inside the folder "this_is_MOD-D-ABLE"
+  - ensure, you have .NET 6.0 installed
+  - on first run, first use "dotnet add Package Accord" to install neccesarry Libraries
+  - start the program by typing "dotnet run"
+  - press ENTER to switch in and out of the command input mode.
+  - in the input mode, type sys:help() to view a list of available commands.
 
 ## Vorläufiges Dateizusammenhangsdiagramm
 <!--
@@ -82,21 +83,3 @@ style="width: 90%; max-width: 860px; display: block; margin-left: auto; margin-r
 +------------------------------------+
 
 ````
-
-## Einschränkung im Rahmen der Abschlussarbeit
-
-Es soll nur das Grundgerüst des Spiels sowie folgende Entitäten und Resourcen erstellt werden.
-
-Entitäten:
-
-- Fighter: Kann andere Entitäten umbringen, Kostet Nahrung und Geld
-- Worker: Kann Gestein & Ore abbauen, Kostet Nahrung
-- Wildlife (friendly): Kann von Fighter getötet werden, enthält Nahrung
-- Wildlife (aggresive): Kann andere Entitäten umbringen, Kann von Fighter getötet werden
-- Ore: Kann von Worker abgebaut werden, Enthält Geld
-- House: Kann Worker und Fighter ausbilden, Kostet Geld
-
-Resourcen:
-
-- Geld: produziert aus Ore von Worker
-- Nahrung: produziert aus Wildlife von Fighter

@@ -1,5 +1,8 @@
 using RoutePlanning;
+using System;
+using System.Reflection;
 public class Worker :Creature{
+    public bool isTarget{get;} = true; // creature is target for enemies
     public override  bool createByPlayer{get;} = false;
     public override bool controlledByPlayer{get;} = true;
     public override char mapChar{get;} = 'W';
@@ -16,6 +19,7 @@ public class Worker :Creature{
 
     public override void step(TIM.main game)
     {
+        base.step(game);
         move();
         checkAttack(game);
     }
@@ -127,6 +131,65 @@ public class Worker :Creature{
     }
     public void mine(TIM.main game){
         mineNearestOre(game);
+    }
+
+    private int checkMaterials(string entityClass){
+        switch(entityClass){
+            case "House":{
+                try{
+                    int[] mat ={0,-4};
+                    methods.callMethod("mat_std","IncMaterialsSave",mat,game);
+                }catch(System.Reflection.TargetInvocationException){
+                    return 0;
+                }
+                return 1;
+            }
+            default: return -1;
+        }
+    }
+
+    public void spawnEntity(string input,TIM.main game){
+        string[] inp = input.Split(",");
+        try{
+            new functionProperties(inp[0]);
+        }catch(NotImplementedException){
+            return;
+        }
+        string entityClass;
+        string name;
+        try{
+            entityClass = inp[0];
+            name = inp[1];
+        }catch(IndexOutOfRangeException){
+            Console.WriteLine("Wrong Syntax: spawnEntity(entityClass,name)");
+            return;
+        }
+        
+        functionProperties entity=new functionProperties(entityClass);
+        switch(checkMaterials(entityClass)){
+            case 0:{
+                Console.WriteLine("Could not create entity.");
+                return;
+            }case -1:{
+                Console.WriteLine("{0} can not be created here.", entityClass);
+                return;
+            }
+            default:{
+                try{
+                    if(entity.fType.GetMethod("autoSetup") is not null){
+                        entity.fType.GetMethod("autoSetup")!.Invoke(entity.fObject, new object[]{this.position,game});
+                        game.entities.Add(name,entity);
+                        game.sys.displayMap(game);
+                    }
+                }catch (ArgumentException){
+                    Console.WriteLine("INF: Entity '{0}' already exists.",name);
+                }
+                return;
+            }
+        }  
+    }
+    public void nE(string input,TIM.main g){
+        spawnEntity(input,game);
     }
 }
 

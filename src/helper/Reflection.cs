@@ -79,6 +79,32 @@ public class methods{
             Console.WriteLine("ERR: Command syntax incorrect!");
         }
     }
+    public static void callMethod(string obj, string func, int[] args, TIM.main game){ //call method with arguments with object, function and arguments seperated.
+        Type? functionType;
+        object? functionObject;
+        try{
+            try{    //try getting entity properties from the Dictionary
+                functionType = game.entities[obj].fType;
+                functionObject = game.entities[obj].fObject;
+            }catch(KeyNotFoundException){
+                Console.WriteLine("ERR: Entity '{0}' not found!", obj);
+                return;
+            }
+
+            MethodInfo? functionMethod = functionType.GetMethod(func);  //try finding the function we want to call
+            if(functionMethod==null){
+                Console.WriteLine("ERR: Command '{0}' not found!",func);
+                return;
+            }
+            try{
+                functionMethod.Invoke(functionObject, new object[]{args,game}); //call the funktion with parameters
+            }catch(System.FormatException){
+                Console.WriteLine("ERR: Command syntax incorrect!");
+            }
+        }catch(System.IndexOutOfRangeException){
+            Console.WriteLine("ERR: Command syntax incorrect!");
+        }
+    }
     public static void callMethod(string obj, string func, TIM.main game){  //call method without arguments, with seperated entity name and function
         Type? functionType;
         object? functionObject;

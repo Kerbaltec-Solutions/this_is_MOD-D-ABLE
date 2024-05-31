@@ -7,7 +7,7 @@ public class Bear: Wildlife{
     protected override float speed{get;} = 7; // in fields per second
     protected override int territoryRange{get;} = 10;
 
-    public override int food{get;} = 4;
+    public override int[] mat{get;} = {4,0};
 
     protected int maxDistanceToSpawn {get{return 3* territoryRange;}} // maximal distance the entity can have to spawn
 
@@ -40,7 +40,7 @@ public class Bear: Wildlife{
 
     // check territory for player-controlled entities to attack
     private void checkTerritory(TIM.main game){
-        entityProperties? tgtCandidate = game.gameMap.findNearestP(this.position.X,this.position.Y,territoryRange + 1,"controlledByPlayer");
+        entityProperties? tgtCandidate = game.gameMap.findNearestP(this.position.X,this.position.Y,territoryRange + 1,"isTarget");
         if(tgtCandidate!=null){
             tgtEntity = tgtCandidate.entity;
             trackEntity = true;}
