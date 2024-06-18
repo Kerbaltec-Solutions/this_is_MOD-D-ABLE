@@ -24,7 +24,7 @@ public class TIM{
         public bool input_interrupt{get; set;}  //boolean, if true, the imput mode is opened
         public Thread InpH{get; set;}   //Input handler
 
-        public const float STEPTIME = (float)1; //time intervals between steps in seconds
+        public const float STEPTIME = (float).1; //time intervals between steps in seconds
 
         public int respawn_timer {get; set;} = 0;  //timer for respawning entities
         
