@@ -3,7 +3,7 @@ using System.Threading;
 using System.Reflection;
 
 public class TIM{
-    public static string version {get;} = "2.0.0"; //public variable for the versioning info
+    public static string version {get;} = "2.0.1-dev"; //public variable for the versioning info
     public static void Main(){
         ui.printIntro();
         Console.ReadKey();
